@@ -1,0 +1,8 @@
+{
+  "search.exclude": {
+    "**/x-node_modules": true
+  },
+  "search.useIgnoreFiles": false,
+  "eslint.rules.customizations": [
+  ]
+}

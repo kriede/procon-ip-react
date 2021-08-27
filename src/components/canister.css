@@ -1,0 +1,35 @@
+.canister {
+  border: 2px solid darkgray;
+  border-radius: 0.25rem;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center; 
+  height: 2rem;
+  margin-left: 0.5rem;
+  position: relative;
+  width: 1.5rem;
+}
+.canisters .label {
+  flex-basis: 10%;
+}
+.canisters .display .label{
+  margin-right: 0;
+}
+.canister .level {
+  border-radius: 0 0 0.25em 0.25em;
+  bottom: 0;
+  display: inline;
+  flex-grow: 0;
+  position: absolute;
+  width: 100%;
+}
+.canister .level.green {
+  background-color: green;
+}
+.canister .level.red {
+  background-color: red;
+}
+.canister .value {
+  font-size: 0.65em;
+  position: absolute;
+}
