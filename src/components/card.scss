@@ -1,0 +1,12 @@
+.card {
+  background-color: #222;
+  border-radius: 0.25em;
+  overflow: hidden;
+  padding: 0.5em;;
+}
+.card.huge .display {
+  font-size: 12vw;
+}
+.card.big .display {
+  font-size: 6vw;
+}

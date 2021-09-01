@@ -1,35 +1,29 @@
-.canister {
+.canister .display {
+  align-items: center; 
   border: 2px solid darkgray;
   border-radius: 0.25rem;
   display: inline-flex;
+  height: 4rem;
   justify-content: center;
-  align-items: center; 
-  height: 2rem;
-  margin-left: 0.5rem;
+  margin: 0.5em;
   position: relative;
-  width: 1.5rem;
+  width: 3rem;
 }
-.canisters .label {
-  flex-basis: 10%;
-}
-.canisters .display .label{
-  margin-right: 0;
-}
-.canister .level {
-  border-radius: 0 0 0.25em 0.25em;
+.canister .display .level {
+  border-radius: 0 0 0.1em 0.1em;
   bottom: 0;
   display: inline;
   flex-grow: 0;
   position: absolute;
   width: 100%;
 }
-.canister .level.green {
+.canister .display .level.green {
   background-color: green;
 }
-.canister .level.red {
+.canister .display .level.red {
   background-color: red;
 }
-.canister .value {
+.canister .display .value {
   font-size: 0.65em;
   position: absolute;
 }

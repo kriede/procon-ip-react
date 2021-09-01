@@ -1,0 +1,81 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  .profile-dialog {
+    background-color: black;
+    border: 1px solid #222;
+    border-radius: 0.5em;;
+    display: grid;
+    gap: 0.5em;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-auto-rows: 1fr;
+    padding: 0.5em;
+    position: fixed;
+    right: 0;
+    transition: all 500ms ease-in;
+    width: 320px;
+    z-index: 1;
+  }
+  .title {
+    grid-column: 1 / span 2;
+    padding: 0.5em;
+    text-align: left;
+  }
+  .username {
+    padding: 0.5em;
+  }
+  .avatar {
+    cursor: pointer;
+    display: inline-flex;
+    flex-direction: row;
+  }
+  .avatar svg {
+    width: 2em;
+    height: 2em;
+  }
+  .avatar svg g {
+    fill: white;
+  }
+  .overlay {
+    background-color: rgb(128,128,128);
+    bottom: 0;
+    display: block;
+    left: 0;
+    opacity: 0.5;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 1;
+  }
+  .error {
+    color: red;
+  }
+  button.primary {
+    border: 2px solid #777;
+    border-radius: 0.5em;
+    background-color: #777;
+    cursor: pointer;
+    color: white;
+    &:hover {
+      background-color: #999;
+    }
+    &:active {
+      background-color: #bbb;
+    }
+  }
+  button.secondary {
+    border: 2px solid #777;
+    background-color: rgba(255,255,255,0);
+    border-radius: 0.5em;
+    cursor: pointer;
+    color: #777;
+    &:hover {
+      background-color: rgba(255,255,255,0.1);
+    }
+    &:active {
+      background-color: rgba(255,255,255,0.3);
+    }
+  }
+}

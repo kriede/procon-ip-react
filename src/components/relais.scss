@@ -1,0 +1,71 @@
+.relais {
+  position: relative;
+  height: 100%;
+
+  .control {
+    display: flex;
+    justify-content: center;
+    margin: 0.5em;
+  }
+  .switch  {
+    border: 2px solid #777;
+    border-radius: 0.5em;
+    color: #777;
+    cursor: pointer;
+    font-size: 0.75rem;
+    line-height: 1.33;
+    min-width: 2em;
+    padding: 0.25em;
+    margin-left: 0.5em;
+  }
+  .state {
+    border: 2px solid white;
+  }
+  .relais-on.manual .on,
+  .relais-on.automatic .auto {
+    background-color: green;
+    border: 2px solid white;
+    box-shadow: 0 0 1.25em 0.25em  rgb(113, 156, 113);
+    color: white;
+  }
+  .relais-off.manual .off,
+  .relais-off.automatic .auto {
+    background-color: #777;
+    border: 2px solid white;
+    color: white;
+  }
+  .relais-off .state {
+    background-color: #777;
+    color: white;
+  }
+  .overlay {
+    bottom: 0;
+    display: none;
+    left: 0;
+    opacity: 0.5;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: -1;
+  }
+  .overlay.busy {
+    display: block;
+    background: linear-gradient(to right, #222 0%, transparent 15%, #222 30%, transparent 100%);
+    animation-name: gradient-animation;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    filter: blur(1px);
+    transform: translateX(-50%);
+    z-index: 1;
+  }
+}
+
+@keyframes gradient-animation {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}

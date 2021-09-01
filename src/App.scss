@@ -1,0 +1,28 @@
+html, body, input, textarea {
+  margin: 0;
+  padding: 0;
+  touch-action: manipulation;
+}
+::-webkit-scrollbar {
+  // Width of vertical scroll bar
+  width: 12px;
+  // Height of horizontal scroll bar
+  height: 12px;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background: #c2c9d2;
+}
+*, *:active, *:hover {
+  transition: all 100ms linear;
+}
+body {
+  background-color: black;
+}
+.App {
+  text-align: center;
+  color: white;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+}
