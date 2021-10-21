@@ -1,12 +1,60 @@
 .card {
-  background-color: #222;
+  background-color: black;
   border-radius: 0.25em;
   overflow: hidden;
-  padding: 0.5em;;
-}
-.card.huge .display {
-  font-size: 12vw;
-}
-.card.big .display {
-  font-size: 6vw;
+  padding: 0em;
+  & > * {
+    height: 100%;
+    position: relative;
+  }
+  .content {
+    position: relative;
+    padding: 0.5em;
+    & > .label {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      display: block;
+    }
+  }
+  .column {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+  .row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+  }
+  & .display {
+    font-size: 1.5em;
+  }
+  &.huge .display {
+    font-size: max(0.8em, 12vw);
+  }
+  &.big .display {
+    font-size: max(0.8em, 6vw);
+  }
+  .display.small {
+    font-size: max(0.8em, 2vw);
+  }  
+  &.normal .display.small {
+    font-size: 0.8em;
+  }
+  &.selected {
+    width: 100vw;
+    height: 100vh;
+  }
+  & > * {
+    background-color: black;
+    transition: all 750ms ease-out;
+  }
+  &.selected > * {
+    height: 100%;
+    transition: all 750ms ease-out;
+  }
 }

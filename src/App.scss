@@ -4,20 +4,22 @@ html, body, input, textarea {
   touch-action: manipulation;
 }
 ::-webkit-scrollbar {
-  // Width of vertical scroll bar
-  width: 12px;
-  // Height of horizontal scroll bar
-  height: 12px;
+  height: 12px; // Height of horizontal scroll bar
+  width: 12px; // Width of vertical scroll bar
 }
 ::-webkit-scrollbar-thumb {
-  border-radius: 8px;
   background: #c2c9d2;
+  border-radius: 8px;
 }
-*, *:active, *:hover {
-  transition: all 100ms linear;
+* {
+  transition: all 200ms ease;
 }
-body {
-  background-color: black;
+*:active, *:hover {
+  transition: all 100ms ease;
+}
+body,select {
+  background-color: #222;
+  color: white;
 }
 .App {
   text-align: center;
@@ -25,4 +27,115 @@ body {
 }
 
 @media (prefers-reduced-motion: no-preference) {
+}
+
+.grid-12 {
+  grid-template-columns: repeat(12, 1fr);
+  .normal {
+    grid-column-end: span 2;
+  }
+  .huge, .big {
+    grid-column-end: span 6;
+  }
+  .full {
+    grid-column-end: span 12;
+  }
+  @media (max-width: 1680px) {
+    .normal {
+      grid-column-end: span 2;
+    }
+  }
+  @media (max-width: 1024px) {
+    .normal {
+      grid-column-end: span 3;
+    }
+  }
+  @media (max-width: 768px) {
+    .normal {
+      grid-column-end: span 4;
+    }
+  }
+  @media (max-width: 512px) {
+    .normal {
+      grid-column-end: span 6;
+    }
+    .huge {
+      grid-column-end: span 12;
+    }
+    .huge, .big {
+      grid-column-end: span 6;
+    }
+  }
+}
+.grid-8 {
+  grid-template-columns: repeat(8, 1fr);
+  .normal {
+    grid-column-end: span 1;
+  }
+  .huge, .big {
+    grid-column-end: span 4;
+  }
+  .full {
+    grid-column-end: span 8;
+  }
+  @media (max-width: 1680px) {
+    .normal {
+      grid-column-end: span 1;
+    }
+  }
+  @media (max-width: 1024px) {
+    .normal {
+      grid-column-end: span 1;
+    }
+  }
+  @media (max-width: 768px) {
+    .normal {
+      grid-column-end: span 2;
+    }
+  }
+  @media (max-width: 512px) {
+    .normal {
+      grid-column-end: span 4;
+    }
+    .huge {
+      grid-column-end: span 12;
+    }
+    .huge, .big {
+      grid-column-end: span 6;
+    }
+  }
+  }
+.grid {
+  align-self: stretch;
+  display: grid;
+  gap: 0.5em;
+  grid-auto-rows: auto;
+  grid-auto-flow: row;
+  grid-template-rows: repeat(2, auto);
+  justify-self: stretch;
+  margin: 0.5em;;
+}
+.grid > * {
+  align-self: stretch;
+  justify-self: stretch;
+}
+.span-2 {
+  grid-row-end: span 2;
+}
+.span-4 {
+  grid-row-end: span 4;
+}
+.label {
+  display: inline;
+  flex-grow: 0;
+}
+.value {
+  display: inline;
+  flex-grow: 0;
+}
+.unit {
+  color: #777;
+  display: inline;
+  flex-grow: 0;
+  padding-left: 0.125em;
 }

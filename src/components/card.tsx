@@ -1,14 +1,25 @@
-import React, { ReactNode } from 'react'
+import React, { MouseEventHandler, ReactNode } from 'react'
 import "./card.scss"
 
-export function Card(props: {
+export const Card = ({
+  id,
+  width,
+  height,
+  children,
+  onclick
+}: {
+  id: string
   width: string
   height?: string
-  children: ReactNode
-}) {
+  children?: ReactNode
+  onclick?: MouseEventHandler<HTMLDivElement>
+}) => {
+
+
   return (
-    <div className={"card " + props.width + " " + props.height}>
-      {props.children}
+    <div className={"card " + width + (height ? " " + height : "")}
+      onClick={onclick} id={""+id}>
+      {children}
     </div>
   )
 }
