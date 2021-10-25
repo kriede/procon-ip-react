@@ -1,4 +1,4 @@
-import { COLOR_DIRTY_100, COLOR_WARM_090, COLOR_WARM_100, COLOR_CLEAN_100, COLOR_CLEAN_090, COLOR_AIR_070, COLOR_AIR_090, COLOR_DIRTY_090 } from './colors'
+import { COLOR_DIRTY_100, COLOR_WARM_090, COLOR_WARM_100, COLOR_CLEAN_100, COLOR_CLEAN_090, COLOR_AIR_070, COLOR_AIR_090, COLOR_DIRTY_090, COLOR_CLEAN_070 } from './colors'
 
 export interface CardLayout {
   domain: {
@@ -78,6 +78,13 @@ const PreferencesConsumption = {
   color: "rgba(128,128,128,0.5)"
 }
 
+const PreferencesFlowSensor = {
+  domain: { min: 0, max: 20 },
+  precision: 0.1,
+  criticals: [8.0, 16],
+  color: COLOR_CLEAN_070
+}
+
 export const TemperaturesLayout: CardLayout = {
   domain: { min: 0, max: 35 },
   precision: 0.1
@@ -110,7 +117,7 @@ export const DashboardLayout: Array<CardLayout> = [
   PreferencesDummy,
   PreferencesDummy,
   // digitalInput: [[24, 27]],
-  PreferencesDummy,
+  PreferencesFlowSensor,
   PreferencesDummy,
   PreferencesDummy,
   PreferencesDummy,

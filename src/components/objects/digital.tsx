@@ -4,9 +4,8 @@ import { GetHistoryData } from '../../services/procon-ip/get-history-data'
 import { SmallLineChart } from '../charts/chart-small'
 import { CardLayout, DashboardLayout } from '../layout'
 import { Min24Value, Max24Value, Value } from './value'
-import './analog.scss'
 
-export function Analog({
+export function Digital({
   state,
   history,
   layout,
@@ -17,7 +16,7 @@ export function Analog({
 }) {
 
   return (
-    <div className="analog" key={state.id}>
+    <div className="digital" key={state.id}>
       <div className="content">
         <div className="label">{state.label}</div>
         <div className="display">

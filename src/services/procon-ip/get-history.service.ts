@@ -62,7 +62,7 @@ export class GetHistoryService extends AbstractService {
   /**
    * The actual service data object with all available history data.
    */
-   public data: GetHistoryData;
+  public data: GetHistoryData;
 
   /**
    * The actual service data object with history data od the last 24 hours.

@@ -6,6 +6,7 @@ import { Consumption } from '../components/objects/consumption'
 import { Card } from '../components/card'
 import { Electrode } from '../components/objects/electrode'
 import { Analog } from '../components/objects/analog'
+import { Digital } from '../components/objects/digital'
 import { Relais } from '../components/objects/relais'
 import { Temperature } from '../components/objects/temperature'
 import { DashboardLayout } from '../components/layout'
@@ -13,6 +14,8 @@ import { useHistory } from 'react-router-dom'
 import { Header } from '../components/header'
 import './overview.scss'
 import { Controller } from 'services/procon-ip/get-controller-service'
+import { GetDosage } from 'services/procon-ip/get-dosage'
+import { Console } from 'console'
 
 const HUGE1_CATEGORY_DEFAULT = GetStateCategory.TEMPERATURES
 const HUGE2_CATEGORY_DEFAULT = GetStateCategory.TEMPERATURES
@@ -28,11 +31,13 @@ export const NOTHING_SELECTED = ""
 export function Overview({
   state,
   history,
-  controller
+  controller,
+  dosage
 }: {
-  state: GetStateData,
-  history: GetHistoryData,
+  state: GetStateData
+  history: GetHistoryData
   controller: Controller
+  dosage: GetDosage
 }) {
 
   if (!state || !state.active || !state.sysInfo) {
@@ -51,6 +56,7 @@ export function Overview({
   const navigateTo = (url: string) => {
     browserHistory.push(url)
   }
+
   const showTemperatures: MouseEventHandler<HTMLDivElement>  = () => {
     navigateTo(GetStateCategory.TEMPERATURES)
   }
@@ -122,11 +128,28 @@ export function Overview({
           )
         })
       }
+      { ((state.sysInfo.configOtherEnable & 64) === 64) &&
+        state.getDataObjectsByCategory(GetStateCategory.DIGITAL_INPUT, true).filter((v,index) => index === 0).map((dataObject, index) => {
+          return (
+            <Card width="normal" key={dataObject.id} onclick={showAnalogs} id={""+dataObject.id}>
+              <Analog state={dataObject}
+                history={history}
+                layout={DashboardLayout[dataObject.id]}
+                key={dataObject.id}/>
+            </Card>
+          )
+        })
+      }
       {
-        state.getDataObjectsByCategory(GetStateCategory.DIGITAL_INPUT, true).map((dataObject) => {
-          return ( state.sysInfo.isDosageEnabled(dataObject) &&
+        state.getDataObjectsByCategory(GetStateCategory.DIGITAL_INPUT, true).filter(
+          (c, index) => ((state.sysInfo.configOtherEnable & 64) !== 64) || index !== 0
+        ).map((dataObject) => {
+          return ( state.sysInfo.configOtherEnable &&
             <Card width="normal" key={dataObject.id} onclick={showDigitals} id={""+dataObject.id}>
-              <Consumption state={dataObject} history={history} key={dataObject.id} />
+              <Digital state={dataObject}
+                history={history}
+                layout={DashboardLayout[dataObject.id]}
+                key={dataObject.id} />
             </Card>
           )
         })
@@ -153,7 +176,11 @@ export function Overview({
         state.getDataObjectsByCategory(GetStateCategory.RELAYS, true).map((dataObject) => {
           return (
             <Card width="normal" key={dataObject.id} onclick={showRelays} id={""+dataObject.id}>
-              <Relais state={dataObject} key={dataObject.id}/>
+              <Relais sysInfo={state.sysInfo} state={dataObject} key={dataObject.id} dosage={
+                dataObject.id === state.sysInfo.chlorineDosageRelais ?
+                  dosage.ChlorineDosage : dataObject.id === state.sysInfo.phMinusDosageRelais ?
+                    dosage.PhMinusDosage : dataObject.id === state.sysInfo.phPlusDosageRelais ?
+                      dosage.PhPlusDosage : undefined}/>
             </Card>
           )
         })

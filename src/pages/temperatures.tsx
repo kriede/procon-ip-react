@@ -11,15 +11,14 @@ import { Card } from '../components/card'
 import { Header } from '../components/header'
 import uPlot from "uplot"
 import './temperatures.scss'
+import { historyService } from 'App'
 
 export function Temperatures({
   state,
-  history,
-  historyService
+  history
 }: {
   state: GetStateData,
-  history: GetHistoryData,
-  historyService: GetHistoryService
+  history: GetHistoryData
 }) {
 
   if (!state || !state.active || !state.sysInfo) {

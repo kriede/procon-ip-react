@@ -14,15 +14,17 @@ import { Overview } from './pages/overview'
 import { Temperatures } from './pages/temperatures'
 import { Controller, GetControllerService } from './services/procon-ip/get-controller-service' 
 import './App.scss'
+import { GetDosage } from 'services/procon-ip/get-dosage'
 
 setLanguage('de')
 
 const logger = new Logger(LogLevel.DEBUG)
 
 var stateService: GetStateService
-var historyService: GetHistoryService
-var controllerService: GetControllerService
 var interpreter: RelayDataInterpreter
+
+export var historyService: GetHistoryService
+export var controllerService: GetControllerService
 export var relaySwitcher: UsrcfgCgiService
 
 export function reconnect(username: string, password: string) {
@@ -50,17 +52,15 @@ export function reconnect(username: string, password: string) {
 reconnect(currentUser.username, currentUser.password)
 
 export default function App() {
-  
-  const [state, setState] = useState(new GetStateData(GETSTATE) as GetStateData)
-  const [history, setHistory] = useState({} as GetHistoryData)
-  const [controller, setController] = useState({} as Controller)
 
-  const [date, setDate] = useState(new Date())
-  
+  // Put a warning in the window titel if anything goes wrong
   useEffect(() => {
     document.title = (((Date.now() - date.getTime()) < 10000 ) ? "" : "⚠ ") + "Pool Controller"
   })
 
+  // Provide current state of the controller
+  const [state, setState] = useState(new GetStateData(GETSTATE) as GetStateData)
+  const [date, setDate] = useState(new Date())
   useEffect(() => {
     stateService.start(async (state: GetStateData) => {
       setState(state)
@@ -71,6 +71,20 @@ export default function App() {
     }
   }, [stateService])
 
+  // Provide current dosage state of the controller
+  const [dosage, setDosage] = useState({} as GetDosage)
+  useEffect(() => {
+    controllerService.start(async (dosage: GetDosage) => {
+      setDosage(dosage)
+    })
+    return () => {
+      controllerService.stop()
+    }
+  }, [controllerService])
+
+  // Provide history data of the controller
+  const [history, setHistory] = useState({} as GetHistoryData)
+  const [controller, setController] = useState({} as Controller)
   useEffect(() => {
     historyService.start(async (historyData: GetHistoryData) => {
       if (!history || !history.min || history.min(0) != historyData.min(0) || history.max(0) != historyData.max(0)) {
@@ -91,10 +105,10 @@ export default function App() {
       <Router>
         <Switch>
           <Route exact path="/">
-            <Overview state={state} history={history} controller={controller}/>
+            <Overview state={state} history={history} controller={controller} dosage={dosage}/>
           </Route>
           <Route path="/temperatures">
-            <Temperatures state={state} history={history} historyService={historyService}/>
+            <Temperatures state={state} history={history}/>
           </Route>
         </Switch>
       </Router>
