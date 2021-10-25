@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useState } from 'react'
+import React, { MouseEventHandler } from 'react'
 import { GetStateCategory, GetStateData } from 'procon-ip/lib/get-state-data'
 import { GetHistoryData } from '../services/procon-ip/get-history-data'
 import { Canister } from '../components/objects/canister'
@@ -15,7 +15,7 @@ import { Header } from '../components/header'
 import './overview.scss'
 import { Controller } from 'services/procon-ip/get-controller-service'
 import { GetDosage } from 'services/procon-ip/get-dosage'
-import { Console } from 'console'
+import { LinkToTemperatures } from 'App'
 
 const HUGE1_CATEGORY_DEFAULT = GetStateCategory.TEMPERATURES
 const HUGE2_CATEGORY_DEFAULT = GetStateCategory.TEMPERATURES
@@ -34,7 +34,7 @@ export function Overview({
   controller,
   dosage
 }: {
-  state: GetStateData
+  state?: GetStateData
   history: GetHistoryData
   controller: Controller
   dosage: GetDosage
@@ -42,7 +42,7 @@ export function Overview({
 
   if (!state || !state.active || !state.sysInfo) {
     return (
-      <div className="nodata">Keine Daten verfügbar</div>
+      <div className="nodata">Daten werden geladen, bitte warte einen Moment...</div>
     )
   }
 
@@ -57,60 +57,32 @@ export function Overview({
     browserHistory.push(url)
   }
 
-  const showTemperatures: MouseEventHandler<HTMLDivElement>  = () => {
-    navigateTo(GetStateCategory.TEMPERATURES)
-  }
-
-  const showElectrodes: MouseEventHandler<HTMLDivElement> = () => {
-    // navigateTo(GetStateCategory.ELECTRODES)
-  }
-
-  const showConsumption: MouseEventHandler<HTMLDivElement> = () => {
-    // navigateTo(GetStateCategory.CANISTER_CONSUMPTION)
-  }
-
-  const showCanisters: MouseEventHandler<HTMLDivElement> = () => {
-    // navigateTo(GetStateCategory.CANISTER)
-  }
-
-  const showAnalogs: MouseEventHandler<HTMLDivElement> = () => {
-    // navigateTo(GetStateCategory.ANALOG)
-  }
-
-  const showDigitals: MouseEventHandler<HTMLDivElement> = () => {
-    // navigateTo(GetStateCategory.DIGITAL_INPUT)
-  }
-
-  const showRelays: MouseEventHandler<HTMLDivElement> = () => {
-    // navigateTo(GetStateCategory.RELAYS)
-  }
-
-  const showDashboard: MouseEventHandler<HTMLDivElement> = () => {
-    navigateTo('')
-  }
-
   return (
     <div className="grid grid-12">
       <Header title="Pool Steuerung"/>
-      <Card width="huge" onclick={showTemperatures} id={"huge-"+huge1.id}>
-        <Temperature state={huge1}
-          history={history}
-          layout={DashboardLayout[huge1.id]}
-          key={huge1.id} />
+      <Card width="huge" /* onclick={showTemperatures}  */id={"huge-"+huge1.id}>
+        <LinkToTemperatures>
+          <Temperature state={huge1}
+            history={history}
+            layout={DashboardLayout[huge1.id]}
+            key={huge1.id} />
+        </LinkToTemperatures>
       </Card>
-      <Card width="huge" onclick={showTemperatures} id={"huge-"+huge2.id}>
-        <Temperature state={huge2}
-          history={history}
-          layout={DashboardLayout[huge2.id]}
-          key={huge2.id} />
+      <Card width="huge" /* onclick={showTemperatures} */ id={"huge-"+huge2.id}>
+        <LinkToTemperatures>
+          <Temperature state={huge2}
+            history={history}
+            layout={DashboardLayout[huge2.id]}
+            key={huge2.id} />
+        </LinkToTemperatures>
       </Card>
-      <Card width="big" onclick={showElectrodes} id={"big-"+big1.id}>
+      <Card width="big" id={"big-"+big1.id}>
         <Electrode state={big1}
           history={history}
           layout={DashboardLayout[big1.id]}
           key={big1.id} />
       </Card>
-      <Card width="big" onclick={showElectrodes} id={"big-"+big2.id}>
+      <Card width="big" id={"big-"+big2.id}>
         <Electrode state={big2}
           history={history}
           layout={DashboardLayout[big2.id]}
@@ -119,7 +91,7 @@ export function Overview({
       {
         state.getDataObjectsByCategory(GetStateCategory.ANALOG, true).map((dataObject, index) => {
           return (
-            <Card width="normal" key={dataObject.id} onclick={showAnalogs} id={""+dataObject.id}>
+            <Card width="normal" key={dataObject.id} id={""+dataObject.id}>
               <Analog state={dataObject}
                 history={history}
                 layout={DashboardLayout[dataObject.id]}
@@ -131,7 +103,7 @@ export function Overview({
       { ((state.sysInfo.configOtherEnable & 64) === 64) &&
         state.getDataObjectsByCategory(GetStateCategory.DIGITAL_INPUT, true).filter((v,index) => index === 0).map((dataObject, index) => {
           return (
-            <Card width="normal" key={dataObject.id} onclick={showAnalogs} id={""+dataObject.id}>
+            <Card width="normal" key={dataObject.id} id={""+dataObject.id}>
               <Analog state={dataObject}
                 history={history}
                 layout={DashboardLayout[dataObject.id]}
@@ -145,7 +117,7 @@ export function Overview({
           (c, index) => ((state.sysInfo.configOtherEnable & 64) !== 64) || index !== 0
         ).map((dataObject) => {
           return ( state.sysInfo.configOtherEnable &&
-            <Card width="normal" key={dataObject.id} onclick={showDigitals} id={""+dataObject.id}>
+            <Card width="normal" key={dataObject.id} id={""+dataObject.id}>
               <Digital state={dataObject}
                 history={history}
                 layout={DashboardLayout[dataObject.id]}
@@ -157,7 +129,7 @@ export function Overview({
       {
         state.getDataObjectsByCategory(GetStateCategory.CANISTER_CONSUMPTION, true).map((dataObject) => {
           return ( state.sysInfo.isDosageEnabled(dataObject) &&
-            <Card width="normal" key={dataObject.id} onclick={showConsumption} id={""+dataObject.id}>
+            <Card width="normal" key={dataObject.id} id={""+dataObject.id}>
               <Consumption state={dataObject} history={history} key={dataObject.id} />
             </Card>
           )
@@ -166,7 +138,7 @@ export function Overview({
       {
         state.getDataObjectsByCategory(GetStateCategory.CANISTER, true).map((dataObject) => {
           return ( state.sysInfo.isDosageEnabled(dataObject) && 
-            <Card width="normal" height="span-2" key={dataObject.id} onclick={showCanisters} id={""+dataObject.id}>
+            <Card width="normal" height="span-2" key={dataObject.id} id={""+dataObject.id}>
               <Canister state={dataObject} phControl={controller.phMinus} key="canister" />
             </Card>
           )
@@ -175,7 +147,7 @@ export function Overview({
       {
         state.getDataObjectsByCategory(GetStateCategory.RELAYS, true).map((dataObject) => {
           return (
-            <Card width="normal" key={dataObject.id} onclick={showRelays} id={""+dataObject.id}>
+            <Card width="normal" key={dataObject.id} id={""+dataObject.id}>
               <Relais sysInfo={state.sysInfo} state={dataObject} key={dataObject.id} dosage={
                 dataObject.id === state.sysInfo.chlorineDosageRelais ?
                   dosage.ChlorineDosage : dataObject.id === state.sysInfo.phMinusDosageRelais ?
@@ -188,11 +160,13 @@ export function Overview({
       {
         state.getDataObjectsByCategory(GetStateCategory.TEMPERATURES, true).map((dataObject, index) => {
           return (
-            <Card width="normal" key={dataObject.id} onclick={showTemperatures} id={""+dataObject.id}>
-              <Temperature
-                state={dataObject}
-                history={history}
-                layout={DashboardLayout[dataObject.id]} />
+            <Card width="normal" id={""+dataObject.id} key={dataObject.id}>
+              <LinkToTemperatures >
+                <Temperature
+                  state={dataObject}
+                  history={history}
+                  layout={DashboardLayout[dataObject.id]} />
+              </LinkToTemperatures>
             </Card>
           )
         })

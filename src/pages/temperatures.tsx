@@ -17,13 +17,13 @@ export function Temperatures({
   state,
   history
 }: {
-  state: GetStateData,
+  state?: GetStateData,
   history: GetHistoryData
 }) {
 
   if (!state || !state.active || !state.sysInfo) {
     return (
-      <div className="nodata">Keine Daten verfügbar</div>
+      <div className="nodata">Daten werden geladen, bitte warte einen Moment...</div>
     )
   }
 

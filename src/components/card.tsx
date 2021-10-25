@@ -15,7 +15,6 @@ export const Card = ({
   onclick?: MouseEventHandler<HTMLDivElement>
 }) => {
 
-
   return (
     <div className={"card " + width + (height ? " " + height : "")}
       onClick={onclick} id={""+id}>

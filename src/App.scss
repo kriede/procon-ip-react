@@ -12,20 +12,19 @@ html, body, input, textarea {
   border-radius: 8px;
 }
 * {
+  color: white;
+  text-decoration: none;
   transition: all 200ms ease;
 }
 *:active, *:hover {
   transition: all 100ms ease;
 }
-body,select {
+body, select {
   background-color: #222;
-  color: white;
 }
 .App {
   text-align: center;
-  color: white;
 }
-
 @media (prefers-reduced-motion: no-preference) {
 }
 

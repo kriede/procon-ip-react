@@ -1,24 +1,23 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, ReactNode } from 'react'
 import { currentUser } from './services/login'
 import { GetHistoryService } from './services/procon-ip/get-history.service'
 import { GetHistoryData } from './services/procon-ip/get-history-data'
 import { GetStateService } from 'procon-ip/lib/get-state.service'
 import { GetStateData } from 'procon-ip/lib/get-state-data'
-import { GETSTATE } from 'procon-ip/lib/mock-state'
 import { Logger, LogLevel } from 'procon-ip/lib/logger'
 import { setLanguage } from './services/appi18n'
 import { UsrcfgCgiService } from 'procon-ip/lib/usrcfg-cgi.service'
 import { RelayDataInterpreter } from 'procon-ip/lib/relay-data-interpreter'
-import { HashRouter as Router, Switch, Route } from 'react-router-dom'
+import { HashRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import { Overview } from './pages/overview'
 import { Temperatures } from './pages/temperatures'
 import { Controller, GetControllerService } from './services/procon-ip/get-controller-service' 
-import './App.scss'
 import { GetDosage } from 'services/procon-ip/get-dosage'
+import './App.scss'
 
 setLanguage('de')
 
-const logger = new Logger(LogLevel.DEBUG)
+const logger = new Logger(LogLevel.WARN)
 
 var stateService: GetStateService
 var interpreter: RelayDataInterpreter
@@ -55,12 +54,12 @@ export default function App() {
 
   // Put a warning in the window titel if anything goes wrong
   useEffect(() => {
-    document.title = (((Date.now() - date.getTime()) < 10000 ) ? "" : "⚠ ") + "Pool Controller"
+    document.title = (date && (((Date.now() - date.getTime()) < 10000 )) ? "" : "⚠ ") + "Pool Controller"
   })
 
   // Provide current state of the controller
-  const [state, setState] = useState(new GetStateData(GETSTATE) as GetStateData)
-  const [date, setDate] = useState(new Date())
+  const [state, setState] = useState(undefined as GetStateData | undefined)
+  const [date, setDate] = useState(undefined as Date | undefined)
   useEffect(() => {
     stateService.start(async (state: GetStateData) => {
       setState(state)
@@ -114,4 +113,28 @@ export default function App() {
       </Router>
     </div>
   )
+}
+
+export function LinkToOverview({children}: {children?: ReactNode}) {
+  return <Link to={'/'}>Temperatures</Link>
+}
+
+export function LinkToTemperatures({children}: {children?: ReactNode}) {
+  return <Link to={'/temperatures'}>{children}</Link>
+}
+
+export function LinkToWaterQuality({children}: {children?: ReactNode}) {
+  return <Link to={'/water'}>{children}</Link>
+}
+
+export function LinkToRelais({children}: {children?: ReactNode}) {
+  return <Link to={'/water'}>{children}</Link>
+}
+
+export function LinkToDigital({children}: {children?: ReactNode}) {
+  return <Link to={'/water'}>{children}</Link>
+}
+
+export function LinkToAnalog({children}: {children?: ReactNode}) {
+  return <Link to={'/water'}>{children}</Link>
 }

@@ -1,8 +1,7 @@
 import React, { FC } from 'react'
-import { AreaChart, Area, ResponsiveContainer, YAxis, ReferenceLine, ReferenceDot, AxisDomain } from "recharts"
+import { AreaChart, Area, ResponsiveContainer, YAxis, ReferenceLine, ReferenceDot, AxisDomain, LineChart } from "recharts"
 import { GetStateDataObject } from 'procon-ip/lib/get-state-data-object'
 import { DATA_KEYS, GetHistoryData, HistoryDataPoint } from '../../services/procon-ip/get-history-data'
-import { minMax, roundDown, roundUp } from '../../services/maths'
 import { CardLayout } from '../layout'
 import './chart-small.scss'
 
@@ -27,7 +26,7 @@ export const SmallLineChart: FC<Props> = ({
   
   return (
     <ResponsiveContainer width="100%" height="100%" className="chart">
-      <AreaChart width={100} height={100} data={history.values24h}>
+      <AreaChart width={100} height={100} data={history.values24h} style={{"cursor": "inherit"}} >
         <Area type="monotone" dataKey={DATA_KEYS[state.id]} stroke={layout.color} fill="rgba(0,0,0,0)" strokeWidth="1" />
         <YAxis domain={domain} tickCount={0} mirror={true} />
         { layout && layout.criticals && layout.criticals.map((value, index) => { return (

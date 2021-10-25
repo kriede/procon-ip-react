@@ -1,6 +1,10 @@
-import React from 'react'
+import React, { MouseEventHandler } from 'react'
 import axios from 'axios'
 import './menu.scss'
+import { GetStateCategory } from 'procon-ip/lib/get-state-data'
+import { useHistory } from 'react-router'
+import { Card } from './card'
+import { Link } from 'react-router-dom'
 
 function toProcon(name: string, data: any) {
   return data + "&" + name + "=1"
@@ -39,9 +43,19 @@ export function Menu({
 }: {
   open: boolean
 }) {
+
+  const browserHistory = useHistory()
+
   return (
     <div className={"navigation" + (open? " open": "")}>
-      <button onClick={onClick}>Test Save JSON</button>
+      <div className="navigation-layer">
+        <Card width="normal" key="navigation" id="navigation">
+          <ul>
+            <li><Link to={'/'}>Overview</Link></li>
+            <li><Link to={'/temperatures'}>Temperatures</Link></li>
+          </ul>
+        </Card>
+      </div>
     </div>
   )
 }

@@ -1,28 +1,22 @@
 .navigation {
-  background-color: darkblue;
-  position: absolute;
-  width: 30em;
-  bottom: 0;
+  background-color: #222;
+  border-radius: 8px;
   left: 0;
+  position: absolute;
+  text-align: left;
   top: 4em;
-  margin-left: -30em;
+  z-index: 1;
   &.open {
     margin-left: 0em;
   }
 }
-@media (max-width: 1680px) {
-  .navigation {
-    width: 30em;
-  }
+.navigation-layer {
+  padding: 0.5em;
 }
-@media (max-width: 1024px) {
+@media (min-width: 512px) {
   .navigation {
-    width: 30em;
-  }
-}
-@media (max-width: 768px) {
-  .navigation {
-    width: 30em;
+    width: 20em;
+    margin-left: -20em;
   }
 }
 @media (max-width: 512px) {
