@@ -16,15 +16,7 @@ import './overview.scss'
 import { Controller } from 'services/procon-ip/get-controller-service'
 import { GetDosage } from 'services/procon-ip/get-dosage'
 import { LinkToTemperatures } from 'App'
-
-const HUGE1_CATEGORY_DEFAULT = GetStateCategory.TEMPERATURES
-const HUGE2_CATEGORY_DEFAULT = GetStateCategory.TEMPERATURES
-const HUGE1_INDEX_DEFAULT = 0
-const HUGE2_INDEX_DEFAULT = 6
-const BIG1_CATEGORY_DEFAULT = GetStateCategory.ELECTRODES
-const BIG2_CATEGORY_DEFAULT = GetStateCategory.ELECTRODES
-const BIG1_INDEX_DEFAULT = 0
-const BIG2_INDEX_DEFAULT = 1
+import { GetStateDataObject } from 'procon-ip/lib/get-state-data-object'
 
 export const NOTHING_SELECTED = ""
 
@@ -46,10 +38,10 @@ export function Overview({
     )
   }
 
-  const huge1 = state.getDataObjectsByCategory(HUGE1_CATEGORY_DEFAULT)[HUGE1_INDEX_DEFAULT]
-  const huge2 = state.getDataObjectsByCategory(HUGE2_CATEGORY_DEFAULT)[HUGE2_INDEX_DEFAULT]
-  const big1 = state.getDataObjectsByCategory(BIG1_CATEGORY_DEFAULT)[BIG1_INDEX_DEFAULT]
-  const big2 = state.getDataObjectsByCategory(BIG2_CATEGORY_DEFAULT)[BIG2_INDEX_DEFAULT]
+  const huge1 = state.getDataObjectsByCategory(DashboardLayout.huge1.category)[DashboardLayout.huge1.index]
+  const huge2 = state.getDataObjectsByCategory(DashboardLayout.huge2.category)[DashboardLayout.huge2.index]
+  const big1 = state.getDataObjectsByCategory(DashboardLayout.big1.category)[DashboardLayout.big1.index]
+  const big2 = state.getDataObjectsByCategory(DashboardLayout.big2.category)[DashboardLayout.big2.index]
 
   const browserHistory = useHistory()
 
@@ -60,32 +52,32 @@ export function Overview({
   return (
     <div className="grid grid-12">
       <Header title="Pool Steuerung"/>
-      <Card width="huge" /* onclick={showTemperatures}  */id={"huge-"+huge1.id}>
+      <Card width="huge" id={"huge-"+huge1.id}>
         <LinkToTemperatures>
           <Temperature state={huge1}
             history={history}
-            layout={DashboardLayout[huge1.id]}
+            layout={DashboardLayout.stateLayout[huge1.id]}
             key={huge1.id} />
         </LinkToTemperatures>
       </Card>
-      <Card width="huge" /* onclick={showTemperatures} */ id={"huge-"+huge2.id}>
+      <Card width="huge" id={"huge-"+huge2.id}>
         <LinkToTemperatures>
           <Temperature state={huge2}
             history={history}
-            layout={DashboardLayout[huge2.id]}
+            layout={DashboardLayout.stateLayout[huge2.id]}
             key={huge2.id} />
         </LinkToTemperatures>
       </Card>
       <Card width="big" id={"big-"+big1.id}>
         <Electrode state={big1}
           history={history}
-          layout={DashboardLayout[big1.id]}
+          layout={DashboardLayout.stateLayout[big1.id]}
           key={big1.id} />
       </Card>
       <Card width="big" id={"big-"+big2.id}>
         <Electrode state={big2}
           history={history}
-          layout={DashboardLayout[big2.id]}
+          layout={DashboardLayout.stateLayout[big2.id]}
           key={big2.id} />
       </Card>
       {
@@ -94,7 +86,7 @@ export function Overview({
             <Card width="normal" key={dataObject.id} id={""+dataObject.id}>
               <Analog state={dataObject}
                 history={history}
-                layout={DashboardLayout[dataObject.id]}
+                layout={DashboardLayout.stateLayout[dataObject.id]}
                 key={dataObject.id}/>
             </Card>
           )
@@ -106,7 +98,7 @@ export function Overview({
             <Card width="normal" key={dataObject.id} id={""+dataObject.id}>
               <Analog state={dataObject}
                 history={history}
-                layout={DashboardLayout[dataObject.id]}
+                layout={DashboardLayout.stateLayout[dataObject.id]}
                 key={dataObject.id}/>
             </Card>
           )
@@ -120,7 +112,7 @@ export function Overview({
             <Card width="normal" key={dataObject.id} id={""+dataObject.id}>
               <Digital state={dataObject}
                 history={history}
-                layout={DashboardLayout[dataObject.id]}
+                layout={DashboardLayout.stateLayout[dataObject.id]}
                 key={dataObject.id} />
             </Card>
           )
@@ -149,10 +141,7 @@ export function Overview({
           return (
             <Card width="normal" key={dataObject.id} id={""+dataObject.id}>
               <Relais sysInfo={state.sysInfo} state={dataObject} key={dataObject.id} dosage={
-                dataObject.id === state.sysInfo.chlorineDosageRelais ?
-                  dosage.ChlorineDosage : dataObject.id === state.sysInfo.phMinusDosageRelais ?
-                    dosage.PhMinusDosage : dataObject.id === state.sysInfo.phPlusDosageRelais ?
-                      dosage.PhPlusDosage : undefined}/>
+                getDosage(state, dataObject)}/>
             </Card>
           )
         })
@@ -165,7 +154,7 @@ export function Overview({
                 <Temperature
                   state={dataObject}
                   history={history}
-                  layout={DashboardLayout[dataObject.id]} />
+                  layout={DashboardLayout.stateLayout[dataObject.id]} />
               </LinkToTemperatures>
             </Card>
           )
@@ -173,4 +162,13 @@ export function Overview({
       }
     </div>
   )
+
+  function getDosage(state: GetStateData, dataObject: GetStateDataObject) {
+    if (!dataObject) return undefined
+    const offsetRelais = Math.min(...state.categories.relays)
+    if (dataObject.id === offsetRelais + state.sysInfo.chlorineDosageRelais) return dosage.ChlorineDosage
+    if (dataObject.id === offsetRelais + state.sysInfo.phMinusDosageRelais) return dosage.PhMinusDosage
+    if (dataObject.id === offsetRelais + state.sysInfo.phPlusDosageRelais) return dosage.PhPlusDosage
+    return undefined
+  }
 }

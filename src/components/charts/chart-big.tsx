@@ -43,7 +43,7 @@ export const BigLineChart: FC<Props> = ({
     states.forEach((state) => {
       if (state.id === value.id) result = {
         label: value.label,
-        stroke: DashboardLayout[state.id].color,
+        stroke: DashboardLayout.stateLayout[state.id].color,
         value: (self: any, rawValue: number) => rawValue.toFixed(1) + "°C",
         id: state.id,
         drawStyle: 0,

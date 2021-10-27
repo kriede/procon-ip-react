@@ -35,7 +35,7 @@ export function Digital({
             <div className="unit">{state.unit}</div>
           </div>
         </div>
-        <SmallLineChart state={state} history={history} layout={DashboardLayout[state.id]}></SmallLineChart>
+        <SmallLineChart state={state} history={history} layout={DashboardLayout.stateLayout[state.id]}></SmallLineChart>
       </div>
     </div>
   )

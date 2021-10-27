@@ -203,6 +203,18 @@ export class GetControllerService extends AbstractService {
   /**
    * Stage request and return the corresponding `AxiosPromise`.
    */
+  public async getRedoxControl(): Promise<AxiosResponse<string>> {
+    const requestConfig = this.axiosRequestConfig
+    requestConfig.url = 'phcntrl.ini'
+    requestConfig.params = {
+      a: Date.now()
+    }
+    return axios.request<string>(requestConfig as AxiosRequestConfig<any>)
+  }
+
+  /**
+   * Stage request and return the corresponding `AxiosPromise`.
+   */
   public async getPhMinusControl(): Promise<AxiosResponse<GetPhControl>> {
     const requestConfig = this.axiosRequestConfig
     requestConfig.url += '/phcntrl.ini?a=' + (Math.random()*1000).toFixed(3) //Date.now()
@@ -225,36 +237,55 @@ export class GetControllerService extends AbstractService {
   }
 
   /**
-   * Stage request and return the corresponding `AxiosPromise`.
+   * Starts a manual chlorine dosage for the given duration
    */
-  public async getRedoxControl(): Promise<AxiosResponse<string>> {
-    const requestConfig = this.axiosRequestConfig
-    requestConfig.url = 'phcntrl.ini'
-    requestConfig.params = {
-      a: Date.now()
-    }
-    return axios.request<string>(requestConfig as AxiosRequestConfig<any>)
+  public manualChlorineDosageStart(duration: number) {
+    return this.manualDosageSet(0, duration)
   }
 
   /**
-   * Starts a manual chlorine dosage for the configured time
+   * Starts a manual Ph-Minus dosage for the given duration
    */
-  public manualChlorineDosage() {
-    return this.manualDosage(0)
+  public manualPhMinusDosageStart(duration: number) {
+    return this.manualDosageSet(1, duration)
   }
 
   /**
-   * Starts a manual Ph-Minus dosage for the configured time
+   * Starts a manual Ph-Plus dosage for the given duration
    */
-  public manualPhMinusDosage() {
-    return this.manualDosage(1)
+  public manualPhPlusDosageStart(duration: number) {
+    return this.manualDosageSet(2, duration)
   }
 
   /**
-   * Starts a manual Ph-Plus dosage for the configured time
+   * Starts a manual chlorine dosage for the given duration
    */
-  public manualPhPlusDosage() {
-    return this.manualDosage(2)
+  public manualChlorineDosageStop() {
+    return this.manualDosageSet(0, 0)
+  }
+
+  /**
+   * Starts a manual Ph-Minus dosage for the given duration
+   */
+  public manualPhMinusDosageStop() {
+    return this.manualDosageSet(1, 0)
+  }
+
+  /**
+   * Starts a manual Ph-Plus dosage for the given duration
+   */
+  public manualPhPlusDosageStop() {
+    return this.manualDosageSet(2, 0)
+  }
+
+  /**
+   * Starts a manual dosage for the given dosage id and the given duration.
+   * 
+   * @param dosageId dosage control (0: Chlor, 1: ph-, 2: pH+)
+   * @param duration duration of dosage in seconds
+   */
+  public manualDosageStart(dosageId: number, duration: number) {
+    return this.manualDosageSet(2, duration)
   }
 
   /**
@@ -262,11 +293,15 @@ export class GetControllerService extends AbstractService {
    * 
    * dosageId 0: Chlor, 1: ph-, 2: pH+
    */
-  public manualDosage(dosageId: number) {
+  public manualDosageStop(dosageId: number) {
+    return this.manualDosageSet(2, 0)
+  }
+
+  private async manualDosageSet(dosageId: number, duration: number): Promise<AxiosResponse<string>>{
     const requestConfig = this.axiosRequestConfig
     requestConfig.url = '/Command.htm'
     requestConfig.params = {
-      MAN_DOSAGE: dosageId + ',0,' + Date.now() /* pH- */
+      MAN_DOSAGE: dosageId + ',' + duration + ',' + (Date.now()%1000000/1000)
     }
     return axios.request<string>(requestConfig as AxiosRequestConfig<any>)
   }

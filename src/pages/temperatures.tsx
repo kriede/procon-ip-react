@@ -76,7 +76,7 @@ export function Temperatures({
               <Temperature
                 state={stateObject}
                 history={currentHistory}
-                layout={DashboardLayout[stateObject.id]} />
+                layout={DashboardLayout.stateLayout[stateObject.id]} />
             </Card>
           )
         })

@@ -22,7 +22,7 @@ export function Consumption({
           <Value value={state.value} precision={1} />
           <div className="unit">{state.unit}</div>
         </div>
-        <SmallBarChart state={state} history={history} layout={DashboardLayout[state.id]}></SmallBarChart>
+        <SmallBarChart state={state} history={history} layout={DashboardLayout.stateLayout[state.id]}></SmallBarChart>
       </div>
     </div>
   )

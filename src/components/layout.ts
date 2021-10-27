@@ -1,3 +1,4 @@
+import { GetStateCategory } from 'procon-ip/lib/get-state-data'
 import { COLOR_DIRTY_100, COLOR_WARM_090, COLOR_WARM_100, COLOR_CLEAN_100, COLOR_CLEAN_090, COLOR_AIR_070, COLOR_AIR_090, COLOR_DIRTY_090, COLOR_CLEAN_070 } from './colors'
 
 export interface CardLayout {
@@ -90,7 +91,7 @@ export const TemperaturesLayout: CardLayout = {
   precision: 0.1
 }
 
-export const DashboardLayout: Array<CardLayout> = [
+const StateLayout: Array<CardLayout> = [
   {domain:{min: 0, max: 0}, precision: 0},
   {...PreferencesChlor, color: "purple" },
   {...PreferencesElectrolysis, color: "yellow" },
@@ -139,3 +140,23 @@ export const DashboardLayout: Array<CardLayout> = [
   PreferencesConsumption,
   PreferencesConsumption,
 ]
+
+export const DashboardLayout = {
+  huge1: {
+    category: GetStateCategory.TEMPERATURES,
+    index: 0
+  },
+  huge2: {
+    category: GetStateCategory.TEMPERATURES,
+    index: 6
+  },
+  big1: {
+    category: GetStateCategory.ELECTRODES,
+    index: 0
+  },
+  big2: {
+    category: GetStateCategory.ELECTRODES,
+    index: 1
+  },
+  stateLayout: StateLayout
+}
