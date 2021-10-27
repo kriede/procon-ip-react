@@ -33,13 +33,13 @@ export function Relais({
       const defaultDuration = 15*60 //TODO 15min; read from controler 
       if (state.id === offsetRelais + sysInfo.chlorineDosageRelais) {
         const duration = parseInt("" + window.prompt('duration', "" + defaultDuration))
-        controllerService.manualChlorineDosage(duration)
+        controllerService.manualChlorineDosageStart(duration)
       } else if (state.id === offsetRelais + sysInfo.phMinusDosageRelais) {
         const duration = parseInt("" + window.prompt('duration', "" + defaultDuration))
-        controllerService.manualPhMinusDosage(duration)
+        controllerService.manualPhMinusDosageStart(duration)
       } else if (state.id === offsetRelais + sysInfo.phPlusDosageRelais) {
         const duration = parseInt("" + window.prompt('duration', "" + defaultDuration))
-        controllerService.manualPhPlusDosage(duration)
+        controllerService.manualPhPlusDosageStart(duration)
       } else {
         relaySwitcher.setOn(state).then(r => {
           setBusy(false)
