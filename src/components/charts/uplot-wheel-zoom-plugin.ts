@@ -44,8 +44,6 @@ export function wheelZoomPlugin(pluginOptions: wheelZoomPluginOptions) {
       setData: setScales,
 
       ready: (u: uPlot) => {
-        console.log("setScales wheel")
-
         setScales(u)
 
         let over = u.over

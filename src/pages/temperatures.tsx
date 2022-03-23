@@ -5,7 +5,7 @@ import { GetStateDataObject } from 'procon-ip/lib/get-state-data-object'
 import { GetHistoryData } from '../services/procon-ip/get-history-data'
 import { GetHistoryService } from '../services/procon-ip/get-history.service'
 import { BigLineChart } from '../components/charts/chart-big'
-import { DashboardLayout, TemperaturesLayout } from '../components/layout'
+import { DashboardLayout, getLayout, StateLayout, TemperaturesLayout } from '../components/layout'
 import { Temperature } from '../components/objects/temperature'
 import { Card } from '../components/card'
 import { Header } from '../components/header'
@@ -76,19 +76,16 @@ export function Temperatures({
               <Temperature
                 state={stateObject}
                 history={currentHistory}
-                layout={DashboardLayout.stateLayout[stateObject.id]} />
+                layout={StateLayout[stateObject.id]} />
             </Card>
           )
         })
       }
-      {/* <Card id="duration-card" width={'normal'}>
-        <Duration onChange={fetch} ></Duration>
-      </Card> */}
       <Card width="full"  height="span-4" id={GetStateCategory.TEMPERATURES}>
         <div className="temperatures">
-          <div className="content">
+          <div className="content chart-big">
             <BigLineChart states={currentState.getDataObjectsByCategory(GetStateCategory.TEMPERATURES, true)}
-              history={history} layout={TemperaturesLayout} fetch={fetch} setLegend={(u: uPlot) => {
+              history={history} layout={getLayout(state)} fetch={fetch} setLegend={(u: uPlot) => {
                 if (u.legend.idx == null) {
                   u.setLegend({idx: u.data[0].length - 1}, false)
                   setLegend(u)
@@ -99,7 +96,7 @@ export function Temperatures({
           </div>
         </div>
       </Card>
-      <Card width="full"  height="span-4" id={GetStateCategory.TEMPERATURES}>
+      <Card width="full"  height="span-4" id={GetStateCategory.TEMPERATURES + '-help'}>
         <div className="content">
           <div className="label">Help</div>
           <p>Use pinch gestures or Ctrl-key with mouse wheel to zoom in and out.</p>

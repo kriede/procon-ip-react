@@ -1,5 +1,6 @@
 import React, { FC } from 'react'
-import { ResponsiveContainer, YAxis, ReferenceLine, ReferenceDot, BarChart, Bar, AxisDomain } from 'recharts'
+import { ResponsiveContainer, YAxis, ReferenceLine, ReferenceDot, BarChart, Bar } from 'recharts'
+import { AxisDomain } from 'recharts/types/util/types'
 import { GetStateDataObject } from 'procon-ip/lib/get-state-data-object'
 import { DATA_KEYS, GetHistoryData, HistoryDataPoint } from '../../services/procon-ip/get-history-data'
 import { CardLayout } from '../layout'
@@ -20,7 +21,8 @@ export const SmallBarChart: FC<Props> = ({
   if (!history || !history.min) {
     return <></>
   }
-  const domain: Readonly<[AxisDomain, AxisDomain]> = [layout.domain.min, layout.domain.max]
+
+  const domain: AxisDomain = [layout.domain.min, layout.domain.max]
   // TODO adjust domain to values outside of prefs
   
   return (

@@ -12,6 +12,7 @@ import { GetPhControl } from './get-ph-control'
 import { mockDosage } from './mock-dosage'
 
 export interface Controller {
+  // TODO redox: GetChlorineControl
   phMinus: GetPhControl
   phPlus: GetPhControl
 }

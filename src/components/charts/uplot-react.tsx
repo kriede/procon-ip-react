@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from "react"
 import uPlot from "uplot"
 import './uplot-react.scss'
+//import '../../../node_modules/uplot/dist/uplot.min.css'
+import 'uplot/dist/uPlot.min.css'
 
 export function UPlot({
   options,

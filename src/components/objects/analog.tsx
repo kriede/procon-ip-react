@@ -2,7 +2,7 @@ import React from 'react'
 import { GetStateDataObject } from 'procon-ip/lib/get-state-data-object'
 import { GetHistoryData } from '../../services/procon-ip/get-history-data'
 import { SmallLineChart } from '../charts/chart-small'
-import { CardLayout, DashboardLayout } from '../layout'
+import { CardLayout, DashboardLayout, StateLayout } from '../layout'
 import { Min24Value, Max24Value, Value } from './value'
 import './analog.scss'
 
@@ -36,7 +36,7 @@ export function Analog({
             <div className="unit">{state.unit}</div>
           </div>
         </div>
-        <SmallLineChart state={state} history={history} layout={DashboardLayout.stateLayout[state.id]}></SmallLineChart>
+        <SmallLineChart state={state} history={history} layout={StateLayout[state.id]}></SmallLineChart>
       </div>
     </div>
   )

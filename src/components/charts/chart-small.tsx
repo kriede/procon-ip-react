@@ -1,5 +1,6 @@
 import React, { FC } from 'react'
-import { AreaChart, Area, ResponsiveContainer, YAxis, ReferenceLine, ReferenceDot, AxisDomain, LineChart } from "recharts"
+import { AreaChart, Area, ResponsiveContainer, YAxis, ReferenceLine, ReferenceDot } from "recharts"
+import { AxisDomain } from 'recharts/types/util/types'
 import { GetStateDataObject } from 'procon-ip/lib/get-state-data-object'
 import { DATA_KEYS, GetHistoryData, HistoryDataPoint } from '../../services/procon-ip/get-history-data'
 import { CardLayout } from '../layout'
@@ -22,7 +23,7 @@ export const SmallLineChart: FC<Props> = ({
   }
 
   // adjust domain to values outside of prefs
-  const domain: Readonly<[AxisDomain, AxisDomain]> = [layout.domain.min, layout.domain.max]
+  const domain: AxisDomain = [layout.domain.min, layout.domain.max]
   
   return (
     <ResponsiveContainer width="100%" height="100%" className="chart">

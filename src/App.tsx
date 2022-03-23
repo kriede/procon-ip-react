@@ -11,6 +11,7 @@ import { RelayDataInterpreter } from 'procon-ip/lib/relay-data-interpreter'
 import { HashRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import { Overview } from './pages/overview'
 import { Temperatures } from './pages/temperatures'
+import { Water } from './pages/water'
 import { Controller, GetControllerService } from './services/procon-ip/get-controller-service' 
 import { GetDosage } from 'services/procon-ip/get-dosage'
 import './App.scss'
@@ -90,6 +91,7 @@ export default function App() {
         setHistory(Object.create(historyData))
       }
       setController({
+        // TODO redox:  (await controllerService.getRedoxControl()).data,
         phMinus: (await controllerService.getPhMinusControl()).data,
         phPlus: (await controllerService.getPhPlusControl()).data
       })
@@ -109,6 +111,15 @@ export default function App() {
           <Route path="/temperatures">
             <Temperatures state={state} history={history}/>
           </Route>
+          <Route path="/chlorine">
+            <Water state={state} history={history} controller={controller} dosage={dosage}/>
+          </Route>
+          <Route path="/ph">
+            <Water state={state} history={history} controller={controller} dosage={dosage}/>
+          </Route>
+          <Route path="/other">
+            <Water state={state} history={history} controller={controller} dosage={dosage}/>
+          </Route>
         </Switch>
       </Router>
     </div>
@@ -123,18 +134,14 @@ export function LinkToTemperatures({children}: {children?: ReactNode}) {
   return <Link to={'/temperatures'}>{children}</Link>
 }
 
-export function LinkToWaterQuality({children}: {children?: ReactNode}) {
-  return <Link to={'/water'}>{children}</Link>
+export function LinkToChlorine({children}: {children?: ReactNode}) {
+  return <Link to={'/chlorine'}>{children}</Link>
 }
 
-export function LinkToRelais({children}: {children?: ReactNode}) {
-  return <Link to={'/water'}>{children}</Link>
+export function LinkToPh({children}: {children?: ReactNode}) {
+  return <Link to={'/ph'}>{children}</Link>
 }
 
-export function LinkToDigital({children}: {children?: ReactNode}) {
-  return <Link to={'/water'}>{children}</Link>
-}
-
-export function LinkToAnalog({children}: {children?: ReactNode}) {
-  return <Link to={'/water'}>{children}</Link>
+export function LinkToOther({children}: {children?: ReactNode}) {
+  return <Link to={'/other'}>{children}</Link>
 }

@@ -3,11 +3,12 @@ import { GetStateDataObject } from 'procon-ip/lib/get-state-data-object'
 import { t } from '../../services/appi18n'
 import { controllerService, relaySwitcher } from 'App'
 import { isLoggedIn } from '../../services/login'
-import './relais.scss'
+import './relay.scss'
 import { GetStateDataSysInfo } from 'procon-ip/lib/get-state-data-sys-info'
 import { GetBaseDosage, GetDosage } from 'services/procon-ip/get-dosage'
+import { GetStateData } from 'procon-ip/lib/get-state-data'
 
-export function Relais({
+export function Relay({
   sysInfo,
   state,
   dosage
@@ -93,4 +94,13 @@ export function Relais({
       </div>
     </div>
   )
+}
+
+export function getDosage(dosage: GetDosage, state: GetStateData, dataObject: GetStateDataObject) {
+  if (!dataObject) return undefined
+  const offsetRelais = Math.min(...state.categories.relays)
+  if (dataObject.id === offsetRelais + state.sysInfo.chlorineDosageRelais) return dosage.ChlorineDosage
+  if (dataObject.id === offsetRelais + state.sysInfo.phMinusDosageRelais) return dosage.PhMinusDosage
+  if (dataObject.id === offsetRelais + state.sysInfo.phPlusDosageRelais) return dosage.PhPlusDosage
+  return undefined
 }
