@@ -1,5 +1,10 @@
 .chart-big {
-  height: 80vh;
+  height: 75vh;
+}
+@media (max-width: 512px) {
+  .chart-big {
+    height: 50vh;
+  }
 }
 .u-over {
   touch-action: pan-y;
