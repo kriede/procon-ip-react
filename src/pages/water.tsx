@@ -14,6 +14,7 @@ import { Controller } from '../services/procon-ip/get-controller-service'
 import { Electrode } from '../components/objects/electrode'
 import { getDosage, Relay } from '../components/objects/relay'
 import { GetDosage } from '../services/procon-ip/get-dosage'
+import { GetStateDataObject } from 'procon-ip/lib/get-state-data-object'
 
 export function Water({
   state,
@@ -43,12 +44,6 @@ export function Water({
       return historyService.data
     }, [historyService]
   )
-  
-  const states = [
-    ...currentState.getDataObjectsByCategory(GetStateCategory.ELECTRODES, true),
-    ...currentState.getDataObjectsByCategory(GetStateCategory.CANISTER, true),
-    ...currentState.getDataObjectsByCategory(GetStateCategory.CANISTER_CONSUMPTION, true)
-  ]
 
   function setLegend(u: uPlot) {
     states.forEach((dataObject, index) => {
@@ -60,6 +55,13 @@ export function Water({
     }
     setCurrentState(Object.create(currentState))
   }
+  
+  const states = [
+    ...currentState.getDataObjectsByCategory(GetStateCategory.ELECTRODES, true),
+    ...currentState.getDataObjectsByCategory(GetStateCategory.CANISTER, true),
+    ...currentState.getDataObjectsByCategory(GetStateCategory.CANISTER_CONSUMPTION, true)
+  ]
+
   return (
     <div className="grid grid-8">
       <Header title="Pool Steuerung"/>
@@ -77,13 +79,14 @@ export function Water({
         </div>
       </Card>
       {
-        state.getDataObjectsByCategory(GetStateCategory.ELECTRODES, true).map((dataObject) => {
+        currentState.getDataObjectsByCategory(GetStateCategory.ELECTRODES, true).map((stateObject: GetStateDataObject) => {
           return (
-            <Card width="normal" key={dataObject.id} id={""+dataObject.id}>
-              <Electrode state={dataObject}
-                history={history}
-                layout={StateLayout[dataObject.id]}
-                key={dataObject.id} />
+            <Card width="normal" key={stateObject.id} id={"" + stateObject.id}>
+              <Electrode
+                state={stateObject}
+                history={currentHistory}
+                layout={StateLayout[stateObject.id]}
+                key={stateObject.id} />
             </Card>
           )
         })
@@ -116,15 +119,22 @@ export function Water({
           )
         })
       }
-      <Card width="full"  height="span-4" id={GetStateCategory.CANISTER}>
+      <Card width="full"  height="span-4" id="chart">
         <div className="dosages">
           <div className="content chart-big">
             <BigLineChart states={states}
-              history={currentHistory} layout={getLayout(state)} fetch={fetch} setLegend={(u: uPlot) => {}}/>
+              history={currentHistory} layout={getLayout(state)} fetch={fetch} setLegend={(u: uPlot) => {
+                if (u.legend.idx == null) {
+                  u.setLegend({idx: u.data[0].length - 1}, false)
+                  setLegend(u)
+                } else {
+                  setLegend(u)
+                }
+              }}/>
           </div>
         </div>
       </Card>
-      <Card width="full"  height="span-4" id={GetStateCategory.TEMPERATURES}>
+      <Card width="full"  height="span-4" id="help">
         <div className="content">
           <div className="label">Help</div>
           <p>Use pinch gestures or Ctrl-key with mouse wheel to zoom in and out.</p>
