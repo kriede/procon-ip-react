@@ -14,7 +14,7 @@ import { useHistory } from 'react-router-dom'
 import { Header } from '../components/header'
 import { Controller } from 'services/procon-ip/get-controller-service'
 import { GetDosage } from 'services/procon-ip/get-dosage'
-import { LinkToChlorine, LinkToPh, LinkToTemperatures } from 'App'
+import { LinkToWater, LinkToTemperatures } from 'App'
 import './overview.scss'
 
 export const NOTHING_SELECTED = ""
@@ -68,20 +68,20 @@ export function Overview({
         </LinkToTemperatures>
       </Card>
       <Card width="big" id={"big-"+big1.id}>
-        <LinkToChlorine>
+        <LinkToWater>
           <Electrode state={big1}
             history={history}
             layout={StateLayout[big1.id]}
             key={big1.id} />
-        </LinkToChlorine>
+        </LinkToWater>
       </Card>
       <Card width="big" id={"big-"+big2.id}>
-        <LinkToPh>
+        <LinkToWater>
           <Electrode state={big2}
             history={history}
             layout={StateLayout[big2.id]}
             key={big2.id} />
-        </LinkToPh>
+        </LinkToWater>
       </Card>
       {
         state.getDataObjectsByCategory(GetStateCategory.ANALOG, true).map((dataObject, index) => {
@@ -126,19 +126,19 @@ export function Overview({
           return ( state.sysInfo.isDosageEnabled(dataObject) &&
             <Card width="normal" key={dataObject.id} id={""+dataObject.id}>
               { index === 0 &&
-                <LinkToChlorine>
+                <LinkToWater>
                   <Consumption state={dataObject} history={history} key={dataObject.id} />
-                </LinkToChlorine>
+                </LinkToWater>
               }
               { index === 1 &&
-                <LinkToPh>
+                <LinkToWater>
                   <Consumption state={dataObject} history={history} key={dataObject.id} />
-                </LinkToPh>
+                </LinkToWater>
               }
               { index === 2 &&
-                <LinkToPh>
+                <LinkToWater>
                   <Consumption state={dataObject} history={history} key={dataObject.id} />
-                </LinkToPh>
+                </LinkToWater>
               }
             </Card>
           )
@@ -149,19 +149,19 @@ export function Overview({
           return ( state.sysInfo.isDosageEnabled(dataObject) && 
             <Card width="normal" height="span-2" key={dataObject.id} id={""+dataObject.id}>
               { index === 0 &&
-                <LinkToChlorine>
+                <LinkToWater>
                   <Canister state={dataObject} phControl={controller.phMinus} key="canister" />
-                </LinkToChlorine>
+                </LinkToWater>
               }
               { index === 1 &&
-                <LinkToPh>
+                <LinkToWater>
                   <Canister state={dataObject} phControl={controller.phMinus} key="canister" />
-                </LinkToPh>
+                </LinkToWater>
               }
               { index === 2 &&
-                <LinkToPh>
+                <LinkToWater>
                   <Canister state={dataObject} phControl={controller.phMinus} key="canister" />
-                </LinkToPh>
+                </LinkToWater>
               }
             </Card>// TODO invalid hard coded phMinusControl
           )

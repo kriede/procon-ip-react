@@ -94,7 +94,8 @@ export interface CardLayout {
     value: number
   },
   color?: string,
-  scale: string
+  scale: string,
+  dash?: number[],
   /**
    * Making [[`GetStateDataObject`]] objects extensible, also allows accessing
    * object keys using string variables.
@@ -164,6 +165,13 @@ const PreferencesTemperature = {
   scale: 'temperature'
 }
 
+const PreferencesCanister = {
+  domain: { min: 0, max: 100 },
+  precision: 1,
+  scale: 'canister',
+  dash: [12, 12] 
+}
+
 const PreferencesConsumption = {
   domain: { min: 0, max: 20 },
   precision: 0.1,
@@ -188,7 +196,7 @@ export const TemperaturesLayout: CardLayout = {
 export const StateLayout: Array<CardLayout> = [
   PreferencesDummy,
   // analog: [1...5]
-  {...PreferencesChlorine, color: "white" },
+  {...PreferencesChlorine, color: "lightblue" },
   {...PreferencesElectrolysis, color: "blue" },
   {...PreferencesFilterPressure, color: "orange" },
   {...PreferencesTank, color: "rgba(255, 0, 128, 1)" },
@@ -229,9 +237,9 @@ export const StateLayout: Array<CardLayout> = [
   PreferencesDummy,
   PreferencesDummy,
   // canister: [36...38]
-  PreferencesDummy,
-  PreferencesDummy,
-  PreferencesDummy,
+  {...PreferencesCanister, color: "purple" },
+  {...PreferencesCanister, color: "yellow" },
+  {...PreferencesCanister, color: "transparent" },
   // canisterConsumptions: [39...41]
   PreferencesConsumption,
   PreferencesConsumption,

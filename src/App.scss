@@ -16,6 +16,9 @@ html, body, input, textarea {
   text-decoration: none;
   transition: all 200ms ease;
 }
+input, textarea {
+  background-color: black;
+}
 *:active, *:hover {
   transition: all 100ms ease;
 }

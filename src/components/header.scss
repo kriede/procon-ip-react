@@ -22,14 +22,20 @@
     grid-column: 1 / span 2;
     padding: 0.5em;
     text-align: left;
+    line-height: 2em;
   }
   .username {
     padding: 0.5em;
+    line-height: 2em;
   }
-  .avatar {
+  .hdiv {
     cursor: pointer;
     display: inline-flex;
     flex-direction: row;
+    padding: 0.5em;
+  }
+  .avatar {
+    line-height: 2em;
     padding: 0.5em;
   }
   .avatar svg {

@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState } from 'react'
 import { t } from '../services/appi18n'
-import { reconnect } from 'App'
+import { LinkToOverview, reconnect } from 'App'
 import { login, logout, isLoggedIn, currentUser } from '../services/login'
 import { Turn as Hamburger } from 'hamburger-react'
 import { Menu } from './menu'
@@ -67,9 +67,15 @@ export function Header({
       <Menu open={isMenuOpen} />
       <Card width="full" id="0" >
         <div className="header">
-          <Hamburger toggled={isMenuOpen} toggle={setMenuOpen} />
-          <div className="title">{title}</div>
-          <div className="avatar" onClick={onAvatarClick}>
+          <div className="hdiv">
+            <Hamburger toggled={isMenuOpen} toggle={setMenuOpen} />
+          </div>
+          <div className="hdiv">
+            <LinkToOverview>
+              <div className="title">{title}</div>
+            </LinkToOverview>
+          </div>
+          <div className="avatar hdiv" onClick={onAvatarClick}>
             { loginData.username !== '' && 
               <div className="username">{loggedIn && loginData.username}</div>
             }

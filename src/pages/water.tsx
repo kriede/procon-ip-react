@@ -6,7 +6,7 @@ import { BigLineChart } from '../components/charts/chart-big'
 import { DashboardLayout, getLayout, StateLayout } from '../components/layout'
 import { Card } from '../components/card'
 import { Header } from '../components/header'
-import uPlot from "uplot"
+import uPlot, { Axis } from "uplot"
 import { historyService } from '../App'
 import { Canister } from '../components/objects/canister'
 import { Consumption } from '../components/objects/consumption'
@@ -15,6 +15,7 @@ import { Electrode } from '../components/objects/electrode'
 import { getDosage, Relay } from '../components/objects/relay'
 import { GetDosage } from '../services/procon-ip/get-dosage'
 import { GetStateDataObject } from 'procon-ip/lib/get-state-data-object'
+import { Analog } from 'components/objects/analog'
 
 export function Water({
   state,
@@ -58,8 +59,56 @@ export function Water({
   
   const states = [
     ...currentState.getDataObjectsByCategory(GetStateCategory.ELECTRODES, true),
+    currentState.getDataObjectsByCategory(GetStateCategory.ANALOG, true)[0],
     ...currentState.getDataObjectsByCategory(GetStateCategory.CANISTER, true),
-    ...currentState.getDataObjectsByCategory(GetStateCategory.CANISTER_CONSUMPTION, true)
+  ]
+
+  const axes: Axis[] = [
+    {
+      stroke: 'purple',
+      scale: "redox",
+      size: 32,
+      grid: {
+        show: false,
+        stroke: 'grey',
+        width: 0.25,
+        dash: [6, 6],
+      } 
+    },
+    {
+      stroke: 'yellow',
+      scale: "pH",
+      size: 32,
+      incrs: [0.1, 0.2, 0.5, 1],
+      grid: {
+        show: false,
+        stroke: 'grey',
+        width: 0.25,
+        dash: [6, 6],
+      }
+    },
+    {
+      stroke: 'lightblue',
+      scale: "chlorine",
+      size: 32,
+      grid: {
+        show: false,
+        stroke: 'grey',
+        width: 0.25,
+        dash: [6, 6],
+      }
+    },
+    {
+      stroke: 'grey',
+      scale: "percent",
+      size: 32,
+      grid: {
+        show: false,
+        stroke: 'grey',
+        width: 0.25,
+        dash: [6, 6],
+      }
+    }
   ]
 
   return (
@@ -92,10 +141,13 @@ export function Water({
         })
       }
       {
-        state.getDataObjectsByCategory(GetStateCategory.CANISTER_CONSUMPTION, true).map((dataObject) => {
-          return ( state.sysInfo.isDosageEnabled(dataObject) &&
+        state.getDataObjectsByCategory(GetStateCategory.ANALOG, true).slice(0, 2).map((dataObject, index) => {
+          return (
             <Card width="normal" key={dataObject.id} id={""+dataObject.id}>
-              <Consumption state={dataObject} history={history} key={dataObject.id} />
+              <Analog state={dataObject}
+                history={history}
+                layout={StateLayout[dataObject.id]}
+                key={dataObject.id}/>
             </Card>
           )
         })
@@ -119,11 +171,20 @@ export function Water({
           )
         })
       }
+      {
+        state.getDataObjectsByCategory(GetStateCategory.CANISTER_CONSUMPTION, true).map((dataObject) => {
+          return ( state.sysInfo.isDosageEnabled(dataObject) &&
+            <Card width="normal" key={dataObject.id} id={""+dataObject.id}>
+              <Consumption state={dataObject} history={history} key={dataObject.id} />
+            </Card>
+          )
+        })
+      }
       <Card width="full"  height="span-4" id="chart">
         <div className="dosages">
           <div className="content chart-big">
             <BigLineChart states={states}
-              history={currentHistory} layout={getLayout(state)} fetch={fetch} setLegend={(u: uPlot) => {
+              history={currentHistory} layout={getLayout(state)} axes={axes} setLegend={(u: uPlot) => {
                 if (u.legend.idx == null) {
                   u.setLegend({idx: u.data[0].length - 1}, false)
                   setLegend(u)

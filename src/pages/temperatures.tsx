@@ -3,13 +3,12 @@ import { GetStateCategory } from 'procon-ip/lib/get-state-data'
 import { GetStateData } from 'procon-ip/lib/get-state-data'
 import { GetStateDataObject } from 'procon-ip/lib/get-state-data-object'
 import { GetHistoryData } from '../services/procon-ip/get-history-data'
-import { GetHistoryService } from '../services/procon-ip/get-history.service'
 import { BigLineChart } from '../components/charts/chart-big'
-import { DashboardLayout, getLayout, StateLayout, TemperaturesLayout } from '../components/layout'
+import { getLayout, StateLayout } from '../components/layout'
 import { Temperature } from '../components/objects/temperature'
 import { Card } from '../components/card'
 import { Header } from '../components/header'
-import uPlot from "uplot"
+import uPlot, { Axis } from "uplot"
 import './temperatures.scss'
 import { historyService } from 'App'
 
@@ -53,6 +52,19 @@ export function Temperatures({
     ...currentState.getDataObjectsByCategory(GetStateCategory.TEMPERATURES, true),
   ]
 
+  const axes: Axis[] = [
+    {
+      stroke: 'white',
+      scale: "temperature",
+      grid: {
+        show: true,
+        stroke: 'grey',
+        width: 0.25,
+        dash: [6, 6],
+      }
+    }
+  ]
+
   return (
     <div className="grid grid-8">
       <Header title="Pool Steuerung"/>
@@ -86,7 +98,7 @@ export function Temperatures({
         <div className="temperatures">
           <div className="content chart-big">
             <BigLineChart states={states}
-              history={history} layout={getLayout(state)} fetch={fetch} setLegend={(u: uPlot) => {
+              history={history} layout={getLayout(state)} axes={axes} setLegend={(u: uPlot) => {
                 if (u.legend.idx == null) {
                   u.setLegend({idx: u.data[0].length - 1}, false)
                   setLegend(u)

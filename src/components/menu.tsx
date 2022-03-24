@@ -1,10 +1,9 @@
-import React, { MouseEventHandler } from 'react'
+import React from 'react'
 import axios from 'axios'
 import './menu.scss'
-import { GetStateCategory } from 'procon-ip/lib/get-state-data'
 import { useHistory } from 'react-router'
 import { Card } from './card'
-import { Link } from 'react-router-dom'
+import { LinkToOverview, LinkToTemperatures, LinkToWater } from 'App'
 
 function toProcon(name: string, data: any) {
   return data + "&" + name + "=1"
@@ -51,8 +50,9 @@ export function Menu({
       <div className="navigation-layer">
         <Card width="normal" key="navigation" id="navigation">
           <ul>
-            <li><Link to={'/'}>Overview</Link></li>
-            <li><Link to={'/temperatures'}>Temperatures</Link></li>
+            <li><LinkToOverview /></li>
+            <li><LinkToTemperatures /></li>
+            <li><LinkToWater /></li>
           </ul>
         </Card>
       </div>

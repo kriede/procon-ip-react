@@ -111,13 +111,7 @@ export default function App() {
           <Route path="/temperatures">
             <Temperatures state={state} history={history}/>
           </Route>
-          <Route path="/chlorine">
-            <Water state={state} history={history} controller={controller} dosage={dosage}/>
-          </Route>
-          <Route path="/ph">
-            <Water state={state} history={history} controller={controller} dosage={dosage}/>
-          </Route>
-          <Route path="/other">
+          <Route path="/water">
             <Water state={state} history={history} controller={controller} dosage={dosage}/>
           </Route>
         </Switch>
@@ -127,21 +121,13 @@ export default function App() {
 }
 
 export function LinkToOverview({children}: {children?: ReactNode}) {
-  return <Link to={'/'}>Temperatures</Link>
+  return <Link to={'/'}>{children ?? 'Overview'}</Link>
 }
 
 export function LinkToTemperatures({children}: {children?: ReactNode}) {
-  return <Link to={'/temperatures'}>{children}</Link>
+  return <Link to={'/temperatures'}>{children ?? 'Temeratures'}</Link>
 }
 
-export function LinkToChlorine({children}: {children?: ReactNode}) {
-  return <Link to={'/chlorine'}>{children}</Link>
-}
-
-export function LinkToPh({children}: {children?: ReactNode}) {
-  return <Link to={'/ph'}>{children}</Link>
-}
-
-export function LinkToOther({children}: {children?: ReactNode}) {
-  return <Link to={'/other'}>{children}</Link>
+export function LinkToWater({children}: {children?: ReactNode}) {
+  return <Link to={'/water'}>{children ?? 'Water'}</Link>
 }
