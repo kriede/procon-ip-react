@@ -1,8 +1,4 @@
 import React, { ChangeEventHandler, useState } from 'react'
-import { GetStateDataObject } from 'procon-ip/lib/get-state-data-object'
-import { GetHistoryData, } from '../services/procon-ip/get-history-data'
-import { CardLayout } from './layout'
-import { GetHistoryService } from 'services/procon-ip/get-history.service'
 
 export function Duration({
   onChange

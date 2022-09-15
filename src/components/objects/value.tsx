@@ -1,5 +1,5 @@
 import React from 'react'
-import { GetStateDataObject } from 'procon-ip/lib/get-state-data-object'
+import { GetStateDataObject } from 'procon-ip'
 import { GetHistoryData } from '../../services/procon-ip/get-history-data'
 import { round } from '../../services/maths'
 import './temperature.scss'
@@ -82,5 +82,5 @@ export function Max24Value({
 }
 
 export function formatValue(value: number, precision: number) {
-  return new Number(value).toFixed(precision < 1 ? (-Math.log10(precision)) : 0)
+  return value.toFixed(precision < 1 ? (-Math.log10(precision)) : 0)
 }

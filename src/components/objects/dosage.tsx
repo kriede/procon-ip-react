@@ -1,5 +1,5 @@
 import React from 'react'
-import { GetStateDataObject } from 'procon-ip/lib/get-state-data-object'
+import { GetStateDataObject } from 'procon-ip'
 import { Value } from './value'
 import { t } from '../../services/appi18n'
 

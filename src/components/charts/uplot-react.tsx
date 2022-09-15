@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react"
 import uPlot from "uplot"
 import './uplot-react.scss'
-//import '../../../node_modules/uplot/dist/uplot.min.css'
 import 'uplot/dist/uPlot.min.css'
 
 export function UPlot({
@@ -18,24 +17,6 @@ export function UPlot({
   
   const chartRef = useRef<uPlot | null>(null)
   const targetRef = useRef<HTMLDivElement | null>(null)
-
-  function createChart() {
-    const newChart = new uPlot(options, data, targetRef.current as HTMLDivElement)
-    chartRef.current = newChart
-    resize()
-    onCreate(newChart)
-    window.addEventListener("resize", resize)
-  }
-
-  function destroyChart(chart: uPlot | null) {
-    if (chart) {
-      window.removeEventListener("resize", resize)
-      onDelete(chart)
-      chart.destroy()
-      chartRef.current = null
-    }
-  }
-
   const prevProps = useRef({options, data}).current
 
   function resize() {
@@ -49,9 +30,18 @@ export function UPlot({
 
   // componentDidMount + componentWillUnmount
   useEffect(() => {
-    createChart()
+    const newChart = new uPlot(options, data, targetRef.current as HTMLDivElement)
+    chartRef.current = newChart
+    resize()
+    onCreate(newChart)
+    window.addEventListener("resize", resize)
     return () => {
-      destroyChart(chartRef.current)
+      if (chartRef.current) {
+        window.removeEventListener("resize", resize)
+        onDelete(chartRef.current)
+        chartRef.current.destroy()
+        chartRef.current = null
+      }
     }
   }, [])
 
@@ -59,13 +49,13 @@ export function UPlot({
   useEffect(() => {
     const chart = chartRef.current
     if (chart) {
-      chart.setData(data, prevProps.data.length != data.length)
+      chart.setData(data, prevProps.data.length !== data.length)
     }
     return () => {
       prevProps.options = options
       prevProps.data = data
     }
-  }, [options, data])
+  }, [options, data, prevProps])
 
   return <div className="uplot-container" ref={targetRef}></div>
 }

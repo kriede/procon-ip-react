@@ -84,7 +84,7 @@ export function wheelZoomPlugin(pluginOptions: wheelZoomPluginOptions) {
               max: nyMax,
             })
           })
-        })
+        }, { passive: true })
       }
     }
   }

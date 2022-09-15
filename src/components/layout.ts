@@ -1,4 +1,4 @@
-import { GetStateCategory, GetStateData } from 'procon-ip/lib/get-state-data'
+import { GetStateCategory, GetStateData } from 'procon-ip'
 import { Scales } from 'uplot'
 import { COLOR_DIRTY_100, COLOR_WARM_090, COLOR_WARM_100, COLOR_CLEAN_100, COLOR_CLEAN_090, COLOR_AIR_070, COLOR_AIR_090, COLOR_DIRTY_090, COLOR_CLEAN_070 } from './colors'
 
@@ -31,7 +31,7 @@ const SCALES: Scales = {
     auto: false,
     range: [0, 600],
   },
-  cpuTemerature: {
+  cpuTemperature: {
     auto: false,
     range: [0, 100],
   },
@@ -249,7 +249,7 @@ export const StateLayout: Array<CardLayout> = [
 export const DashboardLayout = [
   {
     category: GetStateCategory.TEMPERATURES,
-    index: 0,
+    index: 1,
     width: 'huge'
   },
   {
@@ -285,12 +285,12 @@ export const getLayout: (state: GetStateData) => AppLayout = (state) => {
   return {
     pages:{
       temperatures: [
-        ...StateLayout.filter((value, index) => index == state.categories.temperatures)
+        ...StateLayout.filter((value, index) => index === state.categories.temperatures)
       ],
       water: [
-        ...StateLayout.filter((value, index) => index == state.categories.electrodes),
-        ...StateLayout.filter((value, index) => index == state.categories.canister),
-        ...StateLayout.filter((value, index) => index == state.categories.canisterConsumptions),
+        ...StateLayout.filter((value, index) => index === state.categories.electrodes),
+        ...StateLayout.filter((value, index) => index === state.categories.canister),
+        ...StateLayout.filter((value, index) => index === state.categories.canisterConsumptions),
         StateLayout[state.sysInfo.chlorineDosageRelais],
         StateLayout[state.sysInfo.phMinusDosageRelais],
         StateLayout[state.sysInfo.phPlusDosageRelais],

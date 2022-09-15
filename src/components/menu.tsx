@@ -1,9 +1,8 @@
 import React from 'react'
 import axios from 'axios'
 import './menu.scss'
-import { useHistory } from 'react-router'
 import { Card } from './card'
-import { LinkToOverview, LinkToTemperatures, LinkToWater } from 'App'
+import { LinkToOverview, LinkToTemperatures, LinkToWater } from '../App'
 
 function toProcon(name: string, data: any) {
   return data + "&" + name + "=1"
@@ -43,8 +42,6 @@ export function Menu({
   open: boolean
 }) {
 
-  const browserHistory = useHistory()
-
   return (
     <div className={"navigation" + (open? " open": "")}>
       <div className="navigation-layer">
@@ -58,8 +55,4 @@ export function Menu({
       </div>
     </div>
   )
-}
-
-function AxiosRequestConfig<T>(arg0: { re: any }, AxiosRequestConfig: any) {
-  throw new Error('Function not implemented.')
 }

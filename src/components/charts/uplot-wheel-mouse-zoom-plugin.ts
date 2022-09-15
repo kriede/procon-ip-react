@@ -51,7 +51,7 @@ export function wheelMouseZoomPlugin(pluginOptions: wheelMouseZoomPluginOptions)
 
         // wheel drag pan
         over.addEventListener("mousedown", (e: MouseEvent) => {
-          if (e.button == 1) {
+          if (e.button === 1) {
           //	plot.style.cursor = "move";
             e.preventDefault()
 

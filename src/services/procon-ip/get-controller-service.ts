@@ -4,9 +4,9 @@
  */
 
 import axios, { Method, AxiosResponse, AxiosRequestConfig, AxiosPromise } from 'axios'
-import { AbstractService } from 'procon-ip/lib/abstract-service'
-import { IGetStateServiceConfig } from 'procon-ip/lib/get-state.service'
-import { ILogger } from 'procon-ip/lib/logger'
+import { AbstractService } from 'procon-ip'
+import { IGetStateServiceConfig } from 'procon-ip'
+import { ILogger } from 'procon-ip'
 import { GetDosage, GetBaseDosage, GetChlorineDosage, GetPhDosage } from './get-dosage'
 import { GetPhControl } from './get-ph-control'
 import { mockDosage } from './mock-dosage'
@@ -38,44 +38,44 @@ export class GetControllerService extends AbstractService {
   /**
    * The actual service data object with all available history data.
    */
-  public data: GetDosage;
+  public data: GetDosage
    
   /**
    * False until the service retrieved its first data.
    * @internal
    */
-  private _hasData = false;
+  private _hasData = false
 
   /**
    * @internal
    */
-  private next?: number;
+  private next?: number
 
   /**
    * @internal
    */
-  private _consecutiveFailsLimit = 10;
+  private _consecutiveFailsLimit = 10
  
   /**
    * @internal
    */
-  private _consecutiveFails: number;
+  private _consecutiveFails: number
 
   /**
    * An optional callback, that can be passed when calling the
    * [[`start`]] method.
    */
-  private _updateCallback?: (data: GetDosage) => any;
+  private _updateCallback?: (data: GetDosage) => any
 
   /**
    * @internal
    */
-  private _errorCallback?: (e: Error) => any;   
+  private _errorCallback?: (e: Error) => any
   
   /**
    * @internal
    */
-  private _recentError: any;
+  private _recentError: any
 
   /**
    * Initialize a new [[`GetStateService`]].
@@ -206,7 +206,7 @@ export class GetControllerService extends AbstractService {
    */
   public async getRedoxControl(): Promise<AxiosResponse<string>> {
     const requestConfig = this.axiosRequestConfig
-    requestConfig.url = 'phcntrl.ini'
+    requestConfig.url = 'rdxcntrl.ini'
     requestConfig.params = {
       a: Date.now()
     }
@@ -230,7 +230,7 @@ export class GetControllerService extends AbstractService {
    */
   public async getPhPlusControl(): Promise<AxiosResponse<GetPhControl>> {
     const requestConfig = this.axiosRequestConfig
-    requestConfig.url += '/phcntrl.ini?a=' + Date.now()
+    requestConfig.url += '/phpcntrl.ini?a=' + Date.now()
     requestConfig.transformResponse = (data: any, headers?: any) => {
       return this.parsePhControl(data)
     }
@@ -341,12 +341,12 @@ export class GetControllerService extends AbstractService {
       object.actual_duration = parseInt(actual_duration)
       object.total_duration = parseInt(total_duration)
       object.next_cycle = parseInt(next_cycle)
-      if (index == 0) {
+      if (index === 0) {
         (object as GetChlorineDosage).pole_reversal = parseInt(pole_reversal)
         result.ChlorineDosage = object as GetChlorineDosage
-      } else if (index == 1) {
+      } else if (index === 1) {
         result.PhMinusDosage = object as GetPhDosage
-      } else if (index == 2) {
+      } else if (index === 2) {
         result.PhPlusDosage = object as GetPhDosage
       }
     })

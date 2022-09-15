@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { ResponsiveContainer, YAxis, ReferenceLine, ReferenceDot, BarChart, Bar } from 'recharts'
 import { AxisDomain } from 'recharts/types/util/types'
-import { GetStateDataObject } from 'procon-ip/lib/get-state-data-object'
+import { GetStateDataObject } from 'procon-ip'
 import { DATA_KEYS, GetHistoryData, HistoryDataPoint } from '../../services/procon-ip/get-history-data'
 import { CardLayout } from '../layout'
 import './chart-small.scss'

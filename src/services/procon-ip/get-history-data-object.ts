@@ -3,42 +3,42 @@ export class OLDGetHistoryDataObject {
   /**
    * Object id aka column index.
    */
-  public id!: number;
+  public id!: number
 
   /**
    * Object label.
    */
-  public label!: string;
+  public label!: string
  
   /**
    * Raw object input value.
    */
-  public raw!: Array<number>;
+  public raw!: Array<number>
  
   /**
    * Object value offset.
    */
-  public offset!: number;
+  public offset!: number
  
   /**
    * Object value gain.
    */
-  public gain!: number;  
+  public gain!: number
 
   /**
    * key of the values in value array.
    */
-  public key!: string;
+  public key!: string
 
   /**
    * Object unit.
    */
-  public unit!: string;
+  public unit!: string
 
   /**
    * Object instance category string.
    */
-  public category!: string;
+  public category!: string
  
   /**
    * Sub-index for each category.
@@ -46,14 +46,14 @@ export class OLDGetHistoryDataObject {
    * Starts counting from `0` at the first object of the instances category.
    * Used to determine e.g. the relay IDs.
    */
-  public categoryId!: number;
+  public categoryId!: number
  
   /**
    * Indicates whether the object is considered to be active.
    * 
    * Indeed this only means the name is not '_n.a._'.
    */
-  public active!: boolean;
+  public active!: boolean
  
   /**
    * Passthru all parameters to [[`GetStateDataObject.set`]].

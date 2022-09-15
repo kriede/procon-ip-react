@@ -1,11 +1,11 @@
 import React from 'react'
 import { render, fireEvent, waitFor, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
-import { GETSTATE } from 'procon-ip/lib/mock-state'
+import { GETSTATE } from 'procon-ip'
 import { todayHistory } from './mock-history-today'
 import { yesterdayHistory } from './mock-history-yesterday'
 import { GetHistoryData, VALUES_PER_DAY } from './get-history-data'
-import { GetStateData } from 'procon-ip/lib/get-state-data'
+import { GetStateData } from 'procon-ip'
 
 test('renders learn react link', () => {
 

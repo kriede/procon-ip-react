@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState } from 'react'
 import { t } from '../services/appi18n'
-import { LinkToOverview, reconnect } from 'App'
+import { LinkToOverview, reconnect } from '../App'
 import { login, logout, isLoggedIn, currentUser } from '../services/login'
 import { Turn as Hamburger } from 'hamburger-react'
 import { Menu } from './menu'

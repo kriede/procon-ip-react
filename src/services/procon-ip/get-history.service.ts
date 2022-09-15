@@ -1,6 +1,6 @@
 import axios, { Method, AxiosResponse, AxiosRequestConfig } from 'axios'
-import { AbstractService, IServiceConfig } from 'procon-ip/lib/abstract-service'
-import { ILogger } from 'procon-ip/lib/logger'
+import { AbstractService, IServiceConfig } from 'procon-ip'
+import { ILogger } from 'procon-ip'
 import { GetHistoryData, VALUES_PER_DAY } from './get-history-data'
 import { E_ALREADY_LOCKED, Mutex, tryAcquire } from 'async-mutex'
 import { todayHistory } from './mock-history-today'
@@ -44,30 +44,30 @@ export class GetHistoryService extends AbstractService {
     *
     * A path relative to the [[`IServiceConfig.controllerUrl`]].
     */
-   public _endpoint_template = '/[year]/[month]/[date].csv';
+  public _endpoint_template = '/[year]/[month]/[date].csv'
   
   /**
    * Specific service endpoint.
    *
    * A path relative to the [[`IServiceConfig.controllerUrl`]].
    */
-  public _endpoint = '/history';
+  public _endpoint = '/history'
 
   /**
    * HTTP request method for this specific service endpoint.
    * See: `axios/Method`
    */
-  public _method: Method = 'get';
+  public _method: Method = 'get'
 
   /**
    * The actual service data object with all available history data.
    */
-  public data: GetHistoryData;
+  public data: GetHistoryData
 
   /**
    * The actual service data object with history data od the last 24 hours.
    */
-  private _data24h: GetHistoryData;
+  private _data24h: GetHistoryData
 
   public get data24h() {
     // TODO maybe better to update on change of data instead of on every access
@@ -81,18 +81,18 @@ export class GetHistoryService extends AbstractService {
    * False until the service retrieved its first data.
    * @internal
    */
-  private _hasData = false;
+  private _hasData = false
 
   /**
    * @internal
    */
-  private next?: number;
+  private next?: number
 
   /**
    * Initially set via [[`IGetStateServiceConfig`]].
    * Can be adjusted using the [[`setUpdateInterval`]] method.
    */
-  private _updateInterval: number;
+  private _updateInterval: number
 
   /**
    * Range [days] of history data to load.
@@ -107,28 +107,28 @@ export class GetHistoryService extends AbstractService {
   /**
    * @internal
    */
-  private _consecutiveFailsLimit = 10;
+  private _consecutiveFailsLimit = 10
  
   /**
    * @internal
    */
-  private _consecutiveFails: number;
+  private _consecutiveFails: number
  
   /**
    * An optional callback, that can be passed when calling the
    * [[`start`]] method.
    */
-  private _updateCallback?: (data: GetHistoryData) => any;
+  private _updateCallback?: (data: GetHistoryData) => any
 
   /**
    * @internal
    */
-  private _errorCallback?: (e: Error) => any;   
+  private _errorCallback?: (e: Error) => any
   
   /**
    * @internal
    */
-  private _recentError: any;
+  private _recentError: any
 
   /**
    * Initialize a new [[`GetStateService`]].
@@ -223,6 +223,7 @@ export class GetHistoryService extends AbstractService {
       const now = new Date()
       const calendar = new Date()
       const today = calendar.valueOf()
+      console.log("historyService.update")
       if (!this._hasData) {
         const yesterday = calendar.setDate(calendar.getDate() - 1)
         this.data = await this.getHistory(yesterday)

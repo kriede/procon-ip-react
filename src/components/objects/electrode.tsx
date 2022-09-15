@@ -1,5 +1,5 @@
 import React from 'react'
-import { GetStateDataObject } from 'procon-ip/lib/get-state-data-object'
+import { GetStateDataObject } from 'procon-ip'
 import { GetHistoryData } from '../../services/procon-ip/get-history-data'
 import { CardLayout, DashboardLayout, StateLayout } from '../layout'
 import { SmallLineChart } from '../charts/chart-small'

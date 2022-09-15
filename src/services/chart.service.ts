@@ -1,6 +1,6 @@
 import React from 'react'
 import { GetHistoryService } from '../services/procon-ip/get-history.service'
-import { GetStateData } from 'procon-ip/lib/get-state-data'
+import { GetStateData } from 'procon-ip'
 import { GetHistoryData } from './procon-ip/get-history-data'
 
 // export interface ChartData {

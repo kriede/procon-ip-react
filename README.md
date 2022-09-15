@@ -1,28 +1,6 @@
-# procon-ip-react
-
-A responsive UI for the ProCon.IP pool controller based on React.
-
-Feel free to ask questions by using githubs issues system, so others can take
-part and are able to find the answer if they have a similar question. Thanks! :)
-
-## iPhone X
-![image](https://user-images.githubusercontent.com/9135655/138420256-2f1d56cc-1a27-4a46-aa2b-43e614551d96.png)
-
-## iPad
-
-![image](https://user-images.githubusercontent.com/9135655/138420666-4ea7264f-ca89-4569-b92a-416b904b4b18.png)
-
-
-# Getting Started
-
-## Origins
+# Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-After ejecting, I made the following changes to the build scripts:
-
-- Restrict names of all files and folders to 8:3 for compatibility with the FAT32 file system of the ProCon.IP pool controller.
-
 
 ## Available Scripts
 
@@ -31,7 +9,10 @@ In the project directory, you can run:
 ### `npm start`
 
 Runs the app in the development mode.\
-Open [http://localhost:3000/react/index.htm] to view it in the browser.
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
 ### `npm test`
 
@@ -41,26 +22,49 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 ### `npm run build`
 
 Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
-### deployment
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-Not yet automated with a script.
-So far you can use any ftp client to upload the files and folders from the build folder to your ProCon.IP pool controller.
-I recommend creating a folder named 'react' and uploading to that folder. 
+### `npm run eject`
+
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
 ## Learn More
 
-For more information see the following links:
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-* [ProCon.IP - Webbasierte Poolsteuerung / Dosieranlage](https://www.pooldigital.de/shop/poolsteuerungen/procon.ip/35/procon.ip-webbasierte-poolsteuerung-/-dosieranlage)
-' [ProCon.IP - Bedienungsanleitung](http://www.pooldigital.de/trm/TRM_ProConIP.pdf)
-* [ProCon.IP - Support forum](http://forum.pooldigital.de/)
-* [procon-ip - JS library](https://github.com/ylabonte/procon-ip)
-* [Disclaimer](#disclaimer)
+To learn React, check out the [React documentation](https://reactjs.org/).
 
-## Disclaimer
+### Code Splitting
 
-**Just to be clear: I have nothing to do with the development, sellings,
-marketing or support of the pool controller unit itself. I just developed a
-solution for my personal requirements and make it available to the public for free use.**
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+
+### Analyzing the Bundle Size
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

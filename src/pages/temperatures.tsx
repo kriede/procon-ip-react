@@ -1,16 +1,17 @@
 import React, { useCallback, useState } from 'react'
-import { GetStateCategory } from 'procon-ip/lib/get-state-data'
-import { GetStateData } from 'procon-ip/lib/get-state-data'
-import { GetStateDataObject } from 'procon-ip/lib/get-state-data-object'
+import { GetStateCategory } from 'procon-ip'
+import { GetStateData } from 'procon-ip'
+import { GetStateDataObject } from 'procon-ip'
 import { GetHistoryData } from '../services/procon-ip/get-history-data'
 import { BigLineChart } from '../components/charts/chart-big'
 import { getLayout, StateLayout } from '../components/layout'
 import { Temperature } from '../components/objects/temperature'
+import { DateTime } from 'components/objects/dateTime'
 import { Card } from '../components/card'
 import { Header } from '../components/header'
 import uPlot, { Axis } from "uplot"
 import './temperatures.scss'
-import { historyService } from 'App'
+import { historyService } from '../App'
 
 export function Temperatures({
   state,
@@ -20,37 +21,29 @@ export function Temperatures({
   history: GetHistoryData
 }) {
 
+  const [currentState, setCurrentState] = useState(state)
+  const [currentHistory, setCurrentHistory] = useState(history)
+
   if (!state || !state.active || !state.sysInfo) {
     return (
       <div className="nodata">Daten werden geladen, bitte warte einen Moment...</div>
     )
   }
 
-  const [currentState, setCurrentState] = useState(state)
-  const [currentHistory, setCurrentHistory] = useState(history)
-
-  const fetch = useCallback(
-    (date: number): GetHistoryData => {
-      historyService.fetchHistorySince(date)
-      setCurrentHistory(historyService.data)
-      return historyService.data
-    }, [historyService]
-  )
-
   function setLegend(u: uPlot) {
     states.forEach((dataObject, index) => {
-      if (u.legend.idx !== undefined)
+      if (u.legend.idx != null)
         dataObject.value = u.data[index + 1][u.legend.idx] ?? ''
     })
-    if (u.legend.idx !== undefined) {
+    if (u.legend.idx != null && currentState) {
       currentState.objects[0].value = u.data[0][u.legend.idx] ?? ''
     }
-    setCurrentState(Object.create(currentState))
+    //setCurrentState(Object.create(currentState))
   }
 
-  const states = [
+  const states = currentState ? [
     ...currentState.getDataObjectsByCategory(GetStateCategory.TEMPERATURES, true),
-  ]
+  ]: []
 
   const axes: Axis[] = [
     {
@@ -69,20 +62,10 @@ export function Temperatures({
     <div className="grid grid-8">
       <Header title="Pool Steuerung"/>
       <Card width="normal" id="date">
-        <div className="temperature">
-          <div className="content">
-            <div className="label">Time</div>
-            <div className="display">
-              <div className="value">{(new Date(currentState.objects[0].value)).toLocaleDateString('de')}</div>
-            </div>
-            <div className="display small">
-              <div className="value">{(new Date(currentState.objects[0].value)).toLocaleTimeString('de')}</div>
-            </div>
-          </div>
-        </div>
+        <DateTime dateTime={currentState ? new Date(currentState.objects[0].value) : undefined} />
       </Card>
       {
-        currentState.getDataObjectsByCategory(GetStateCategory.TEMPERATURES, true).map((stateObject: GetStateDataObject) => {
+        currentState && currentState.getDataObjectsByCategory(GetStateCategory.TEMPERATURES, true).map((stateObject: GetStateDataObject) => {
           return (
             <Card width="normal" key={stateObject.id} id={"" + stateObject.id}>
               <Temperature

@@ -11,7 +11,10 @@ export const currentUser = {
 
 export async function login(username: string, password: string) {
   const result = await axios.get("/usr/passwd.ini", {
-    auth: currentUser
+    auth: {
+      username: username,
+      password: password
+    }
   })
   if (result.status === 404) {
     logout()
@@ -20,6 +23,9 @@ export async function login(username: string, password: string) {
     currentUser.username = localStorage.SPCuser = username
     currentUser.password = localStorage.SPCpass = password
     localStorage.SPCauth = btoa(username + ':' + password)
+  } else {
+    logout()
+    throw new Error('login failed with status ' + result.status + ": " + result.statusText)
   }
 }
 

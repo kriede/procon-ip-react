@@ -31,7 +31,7 @@ export function touchZoomPlugin(pluginOptions: touchZoomPluginOptions) {
       let t0x = t0.clientX - rect.left
       let t0y = t0.clientY - rect.top
 
-      if (ts.length == 1) {
+      if (ts.length === 1) {
         t.x = t0x
         t.y = t0y
         t.d = t.dx = t.dy = 1
@@ -96,7 +96,6 @@ export function touchZoomPlugin(pluginOptions: touchZoomPluginOptions) {
     }
 
     function touchmove(e: TouchEvent) {
-      // e.preventDefault()
       storePos(to, e)
 
       if (!rafPending) {
@@ -107,8 +106,6 @@ export function touchZoomPlugin(pluginOptions: touchZoomPluginOptions) {
 
     function mousemove(e: MouseEvent) {
       if (!e.target) return
-      // e.preventDefault()
-      console.log("mouse move")
       storePos(to, new TouchEvent(
         "touchstart", {
           touches: [ new Touch({
@@ -141,15 +138,12 @@ export function touchZoomPlugin(pluginOptions: touchZoomPluginOptions) {
     }
 
     over.addEventListener("touchstart", function (e: TouchEvent): void {
-      // e.preventDefault()
       onTouchStart(e)
       document.addEventListener("touchmove", touchmove, { passive: true })
-    })
+    }, { passive: true })
 
     over.addEventListener("mousedown", function(e: MouseEvent) {
       if (!e.target) return
-      // e.preventDefault()
-      console.log("mouse down")
       onTouchStart(new TouchEvent(
         "touchstart", {
           touches: [ new Touch({
@@ -161,15 +155,15 @@ export function touchZoomPlugin(pluginOptions: touchZoomPluginOptions) {
         }
       ))
       document.addEventListener("mousemove", mousemove, { passive: true })
-    })
+    }, { passive: true })
 
     over.addEventListener("touchend", function(e: TouchEvent) {
       document.removeEventListener("touchmove", touchmove)
-    })
+    }, { passive: true })
 
     over.addEventListener("mouseup", function(e: MouseEvent) {
       document.removeEventListener("mousemove", mousemove)
-    })
+    }, { passive: true })
   }
 
   const setScales = (u: uPlot) => {

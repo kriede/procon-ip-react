@@ -141,7 +141,7 @@ export class GetHistoryData {
   /**
    * data array for all historical values 
    */
-   public values: HistoryDataPoint[]
+  public values: HistoryDataPoint[]
 
 
   /**

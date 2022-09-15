@@ -1,6 +1,6 @@
 import React from 'react'
-import { GetStateDataObject } from 'procon-ip/lib/get-state-data-object'
-import { GetPhControl } from 'services/procon-ip/get-ph-control'
+import { GetStateDataObject } from 'procon-ip'
+import { GetPhControl } from '../../services/procon-ip/get-ph-control'
 import { t } from '../../services/appi18n'
 import { Value } from './value'
 import './canister.scss'

@@ -1,5 +1,5 @@
 import React, { FC, useRef } from 'react'
-import { GetStateDataObject } from 'procon-ip/lib/get-state-data-object'
+import { GetStateDataObject } from 'procon-ip'
 import { GetHistoryData } from '../../services/procon-ip/get-history-data'
 import { AppLayout, StateLayout } from '../layout'
 import { UPlot } from './uplot-react'
@@ -7,7 +7,6 @@ import uPlot, { Hooks } from 'uplot'
 import { wheelZoomPlugin } from './uplot-wheel-zoom-plugin'
 import { touchZoomPlugin } from './uplot-touch-zoom-plugin'
 import './chart-big.scss'
-import { isNumber } from 'util'
 
 interface Props {
   states: Array<GetStateDataObject>
@@ -29,7 +28,7 @@ export const BigLineChart: FC<Props> = ({
     return <></>
   }
 
-  const targestRef = useRef<HTMLDivElement>(null)
+  const targetRef = useRef<HTMLDivElement>(null)
   
   function CustomLegendPlugin() {
     return {

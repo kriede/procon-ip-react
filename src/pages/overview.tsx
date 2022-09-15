@@ -1,5 +1,5 @@
-import React, { MouseEventHandler } from 'react'
-import { GetStateCategory, GetStateData } from 'procon-ip/lib/get-state-data'
+import React from 'react'
+import { GetStateCategory, GetStateData } from 'procon-ip'
 import { GetHistoryData } from '../services/procon-ip/get-history-data'
 import { Canister } from '../components/objects/canister'
 import { Consumption } from '../components/objects/consumption'
@@ -10,11 +10,11 @@ import { Digital } from '../components/objects/digital'
 import { getDosage, Relay } from '../components/objects/relay'
 import { Temperature } from '../components/objects/temperature'
 import { DashboardLayout, StateLayout } from '../components/layout'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Header } from '../components/header'
-import { Controller } from 'services/procon-ip/get-controller-service'
-import { GetDosage } from 'services/procon-ip/get-dosage'
-import { LinkToWater, LinkToTemperatures } from 'App'
+import { Controller } from '../services/procon-ip/get-controller-service'
+import { GetDosage } from '../services/procon-ip/get-dosage'
+import { LinkToWater, LinkToTemperatures } from '../App'
 import './overview.scss'
 
 export const NOTHING_SELECTED = ""
@@ -31,6 +31,8 @@ export function Overview({
   dosage: GetDosage
 }) {
 
+  const navigate = useNavigate()
+
   if (!state || !state.active || !state.sysInfo) {
     return (
       <div className="nodata">Daten werden geladen, bitte warte einen Moment...</div>
@@ -42,10 +44,8 @@ export function Overview({
   const big1 = state.getDataObjectsByCategory(DashboardLayout[2].category)[DashboardLayout[2].index]
   const big2 = state.getDataObjectsByCategory(DashboardLayout[3].category)[DashboardLayout[3].index]
 
-  const browserHistory = useHistory()
-
   const navigateTo = (url: string) => {
-    browserHistory.push(url)
+    navigate(url)
   }
 
   return (

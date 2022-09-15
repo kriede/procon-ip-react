@@ -2,18 +2,18 @@ import React, {useState, useEffect, ReactNode } from 'react'
 import { currentUser } from './services/login'
 import { GetHistoryService } from './services/procon-ip/get-history.service'
 import { GetHistoryData } from './services/procon-ip/get-history-data'
-import { GetStateService } from 'procon-ip/lib/get-state.service'
-import { GetStateData } from 'procon-ip/lib/get-state-data'
-import { Logger, LogLevel } from 'procon-ip/lib/logger'
+import { GetStateService } from 'procon-ip'
+import { GetStateData } from 'procon-ip'
+import { Logger, LogLevel } from 'procon-ip'
 import { setLanguage } from './services/appi18n'
-import { UsrcfgCgiService } from 'procon-ip/lib/usrcfg-cgi.service'
-import { RelayDataInterpreter } from 'procon-ip/lib/relay-data-interpreter'
-import { HashRouter as Router, Switch, Route, Link } from 'react-router-dom'
+import { UsrcfgCgiService } from 'procon-ip'
+import { RelayDataInterpreter } from 'procon-ip'
+import { HashRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import { Overview } from './pages/overview'
 import { Temperatures } from './pages/temperatures'
 import { Water } from './pages/water'
 import { Controller, GetControllerService } from './services/procon-ip/get-controller-service' 
-import { GetDosage } from 'services/procon-ip/get-dosage'
+import { GetDosage } from './services/procon-ip/get-dosage'
 import './App.scss'
 
 setLanguage('de')
@@ -104,17 +104,17 @@ export default function App() {
   return (
     <div className="App">
       <Router>
-        <Switch>
-          <Route exact path="/">
+        <Routes>
+          <Route path="/" element={
             <Overview state={state} history={history} controller={controller} dosage={dosage}/>
-          </Route>
-          <Route path="/temperatures">
+          }></Route>
+          <Route path="/temperatures" element={
             <Temperatures state={state} history={history}/>
-          </Route>
-          <Route path="/water">
+          }></Route>
+          <Route path="/water" element={
             <Water state={state} history={history} controller={controller} dosage={dosage}/>
-          </Route>
-        </Switch>
+          }></Route>
+        </Routes>
       </Router>
     </div>
   )
