@@ -1,6 +1,10 @@
 {
- "name": "App",
- "icons": [
+  "name": "Pool Controler",
+  "short_name": "Pool",
+  "theme_color": "#000000",
+  "background_color": "#000000",
+  "display": "standalone",
+  "icons": [
   {
    "src": "\/react\/and36.png",
    "sizes": "36x36",
