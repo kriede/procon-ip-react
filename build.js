@@ -1,6 +1,7 @@
 'use strict'
 
 const rewire = require('rewire')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin')
 const { InjectManifest } = require('workbox-webpack-plugin')
@@ -16,6 +17,9 @@ const config = defaults.__get__('config')
 
 config.output.filename = 'js/[name]/[contenthash:8].js'
 config.output.chunkFilename = 'js/[name]/[contenthash:8].js'
+
+const htmlWebpackPlugin = config.plugins.find(plugin => plugin instanceof HtmlWebpackPlugin)
+htmlWebpackPlugin.options.filename = 'index.htm'
 
 const miniCssExtractPlugin = config.plugins.find(plugin => plugin instanceof MiniCssExtractPlugin)
 miniCssExtractPlugin.options.filename = 'css/[contenthash:8].css'
