@@ -2,11 +2,10 @@ import i18n, {TFunction} from 'i18next'
 import { initReactI18next } from 'react-i18next'
 import en from '../locales/en.json'
 import de from '../locales/de.json'
-
-var _useAppTranslation: TFunction = (x) => x
+import i18next from 'i18next'
 
 export function t(x: string | string[]) {
-  return _useAppTranslation(prepare(x))
+  return i18next.t(prepare(x))
 }
 
 function prepare(x: string | string[]): any {
@@ -36,7 +35,6 @@ export function setLanguage(code: string): Promise<{ locales: string, language: 
   const language = suggestLanguage(code)
   if (i18n.isInitialized) {
     return i18n.changeLanguage(language).then((t) => {      
-      _useAppTranslation=t
       return { locales: t("locales"), language }
     })
   } else {
@@ -49,10 +47,8 @@ export function setLanguage(code: string): Promise<{ locales: string, language: 
           escapeValue: false // react already safes from xss
         }
       }).then((t) => {
-        _useAppTranslation=t
         return { locales: t("locales"), language }
       }, (reason: any) => {
-        _useAppTranslation=(x:any)=>x
         console.error(reason)
         return { locales: "en-US", language: Language.English }
       })
