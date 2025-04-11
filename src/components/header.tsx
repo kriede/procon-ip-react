@@ -92,7 +92,6 @@ export function Header({
                     <>
                       <div className="title">Logout</div>
                       <button type="button" onClick={onLogout} id="logout" className="primary">{t("logout")}</button>
-                      <button type="button" onClick={onCancel} id="cancel" className="secondary">{t("cancel")}</button>
                     </>
                   }
                   { !loggedIn &&
@@ -103,9 +102,9 @@ export function Header({
                       <label htmlFor="password">Passwort</label>
                       <input type="password" id="password" placeholder="password" value={loginData.password} onChange={onChangePassword} autoCorrect="off" autoComplete="current-password" />
                       <button type="button" onClick={onLogin} id="login" className="primary" disabled={loginData.username === "" || loginData.password === ""}>{t("login")}</button>
-                      <button type="button" onClick={onCancel} id="cancel" className="secondary">{t("cancel")}</button>
                     </>
                   }
+                  <button type="button" onClick={onCancel} id="cancel" className="secondary">{t("cancel")}</button>
                   { errorText && errorText !== '' &&
                     <div className="error">{errorText}</div>
                   }

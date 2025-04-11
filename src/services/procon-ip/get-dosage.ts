@@ -16,9 +16,9 @@ export interface GetBaseDosage {
   pump_on_time: number
 
   /**
-   * State of the dosage relais
+   * State of the dosage relay
   */
-  relais_state: boolean
+  relay_state: boolean
 
   /**
    * Remaining dosage time in seconds.

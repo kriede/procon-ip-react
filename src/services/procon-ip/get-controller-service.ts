@@ -325,7 +325,7 @@ export class GetControllerService extends AbstractService {
       const [
         pump_state,
         pump_on_time,
-        relais_state,
+        relay_state,
         remaining_time,
         actual_duration,
         total_duration,
@@ -336,7 +336,7 @@ export class GetControllerService extends AbstractService {
       object.time = Date.now()
       object.pump_state = parseInt(pump_state) === 1
       object.pump_on_time = parseInt(pump_on_time)
-      object.relais_state = parseInt(relais_state) === 1
+      object.relay_state = parseInt(relay_state) === 1
       object.remaining_time = parseInt(remaining_time)
       object.actual_duration = parseInt(actual_duration)
       object.total_duration = parseInt(total_duration)

@@ -15,7 +15,8 @@ export function Dosage({
   consumption
 }: DosageProps) {
 
-  const color = canister.value > 20 ? "green" : "red"
+  const value = typeof canister.value === "number" ? canister.value : parseInt(canister.value, 10)
+  const color = value > 20 ? "green" : "red"
 
   return (
     <div className="dosage" key={data.id}>

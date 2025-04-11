@@ -1,4 +1,4 @@
-import { GetStateCategory, GetStateData } from 'procon-ip'
+import { GetStateCategory, GetStateData, GetStateDataSysInfo } from 'procon-ip'
 import { Scales } from 'uplot'
 import { COLOR_DIRTY_100, COLOR_WARM_090, COLOR_WARM_100, COLOR_CLEAN_100, COLOR_CLEAN_090, COLOR_AIR_070, COLOR_AIR_090, COLOR_DIRTY_090, COLOR_CLEAN_070 } from './colors'
 
@@ -282,19 +282,20 @@ export interface AppLayout {
 }
 
 export const getLayout: (state: GetStateData) => AppLayout = (state) => {
+  const sysInfo: GetStateDataSysInfo = state.sysInfo
   return {
     pages:{
       temperatures: [
-        ...StateLayout.filter((value, index) => index === state.categories.temperatures)
+        ...StateLayout.filter((value, index) => state.categories.temperatures.includes(index))
       ],
       water: [
-        ...StateLayout.filter((value, index) => index === state.categories.electrodes),
-        ...StateLayout.filter((value, index) => index === state.categories.canister),
-        ...StateLayout.filter((value, index) => index === state.categories.canisterConsumptions),
-        StateLayout[state.sysInfo.chlorineDosageRelais],
-        StateLayout[state.sysInfo.phMinusDosageRelais],
-        StateLayout[state.sysInfo.phPlusDosageRelais],
-        // TODO add electrolysis cleaning relais
+        ...StateLayout.filter((value, index) => state.categories.electrodes.includes(index)),
+        ...StateLayout.filter((value, index) => state.categories.canister.includes(index)),
+        ...StateLayout.filter((value, index) => state.categories.canisterConsumptions.includes(index)),
+        StateLayout[sysInfo.chlorineDosageRelay],
+        StateLayout[state.sysInfo.phMinusDosageRelay],
+        StateLayout[state.sysInfo.phPlusDosageRelay],
+        // TODO add electrolysis cleaning relay
       ]
     },
     states: StateLayout,

@@ -11,7 +11,7 @@ export interface GetPhControl {
   FILTER: number
 
   /**
-   * Relais number of ph dosage pump
+   * Relay number of ph dosage pump
    */
   PHPUMP: number
 

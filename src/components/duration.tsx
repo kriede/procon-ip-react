@@ -18,7 +18,7 @@ export function Duration({
       <div className="content">
         <div className="label">Zeitraum</div>
         <div className="display">
-          <select value={duration} onChange={onDurationChange}>
+          <select value={duration} onChange={onDurationChange} title="Duration">
             <option value="1d">24 Stunden</option>
             <option value="3d">3 Tage</option>
             <option value="7d">1 Woche</option>
