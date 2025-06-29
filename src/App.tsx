@@ -101,6 +101,10 @@ export default function App() {
     }
   }, [historyService])
 
+  const clearLocalStorage = () => {
+    localStorage.clear()
+  }
+
   return (
     <div className="App">
       <Router>
@@ -116,6 +120,7 @@ export default function App() {
           }></Route>
         </Routes>
       </Router>
+      <button type="button" onClick={clearLocalStorage} >Clear localStorage</button>
     </div>
   )
 }

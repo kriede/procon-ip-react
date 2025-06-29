@@ -1,20 +1,21 @@
 {
   "name": "procon-ip-react",
-  "description": "My webpack project",
-  "version": "0.0.1",
+  "description": "Mobile App for the procon-ip pool controller",
+  "version": "1.0.1",
   "private": true,
   "homepage": "http://pool.fritz.box/react",
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "react-scripts": "^5.0.1",
     "rewire": "^6.0.0",
     "sass": "^1.54.9",
     "sass-loader": "^13.0.2"
   },
   "dependencies": {
     "async-mutex": "^0.3.2",
-    "axios": "^0.23.0",
+    "axios": "^1.8.4",
     "hamburger-react": "^2.4.1",
     "procon-ip": "^1.0.0",
     "react": "^18.2.0",
@@ -22,11 +23,15 @@
     "react-i18next": "^11.11.4",
     "react-router": "^6.3.0",
     "react-router-dom": "^6.3.0",
-    "react-scripts": "5.0.1",
     "recharts": "^2.1.2",
     "uplot": "^1.6.17",
     "uplot-react": "^1.1.1",
     "web-vitals": "^2.1.4"
+  },
+  "overrides": {
+    "typescript": {
+      "typescript": "^5.8.3"
+    }
   },
   "scripts": {
     "start": "react-scripts start",
