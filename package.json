@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "async-mutex": "^0.3.2",
-    "axios": "^1.13.5",
+    "axios": "^1.16.1",
     "hamburger-react": "^2.4.1",
     "procon-ip": "^1.0.0",
     "react": "^18.2.0",
